@@ -1,3 +1,5 @@
+"""GPT仲介モジュール"""
+
 import openai
 import os
 

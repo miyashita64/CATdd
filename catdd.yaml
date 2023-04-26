@@ -1,6 +1,9 @@
 version: 1.0
 target_project:
   path: target_project/etrobocon2022
+  src_dir: target_project/etrobocon2022/module
   test_exec_cmd: bash gtest_all.sh
+  test_log_dir: target_project/logs
+  test_log_name: latest.log
   program_lang: C++
   comment_lang: japanese
