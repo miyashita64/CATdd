@@ -1,0 +1,6 @@
+version: 1.0
+target_project:
+  path: target_project/etrobocon2022
+  test_exec_cmd: bash gtest_all.sh
+  program_lang: C++
+  comment_lang: japanese
