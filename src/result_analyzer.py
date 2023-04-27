@@ -5,6 +5,13 @@ class ResultAnalyzer:
     """テスト結果解析クラス"""
     @staticmethod
     def analyze(log_path):
+        """テスト結果から失敗したテストケースについての情報を抽出する.
+
+        Args:
+            log_path: String
+        Return:
+            失敗したテストケースデータのリスト: [{path: String, testcase_names: [String]}]
+        """
         failed_start_pattern = r"\d+: (.+):(\d+): Failure"
         errors = []
         in_error = False

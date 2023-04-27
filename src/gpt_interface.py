@@ -8,6 +8,13 @@ class GPTInterface:
 
     @staticmethod
     def request(prompt):
+        """受け取ったpromptをGPTに送信し、レスポンスを返す.
+
+        Args:
+            prompt: String
+        Return:
+            GPTから返ってきた文字列: String
+        """
         # APIキーの設定
         openai.api_key = os.environ["OPENAI_API_KEY"]
         model_engine = "text-davinci-003"

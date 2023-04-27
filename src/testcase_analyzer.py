@@ -3,6 +3,13 @@ from file_interface import FileInterface
 class TestcaseAnalyzer:
     @staticmethod
     def analyze(test_data):
+        """テストデータを受け取り、失敗したテストケースの内容を抽出する関数.
+
+        Arg:
+            test_data: {path: String, testcase_names: [String]}
+        Return:
+            失敗したテストケースだけを結合した文字列: String
+        """
         failed_testcases = []
         failed_testcase = ""
         testcode = FileInterface.read(test_data["path"])
