@@ -7,15 +7,22 @@ class FileInterface:
     @staticmethod
     def read(path):
         """指定したファイルのテキストを返す関数"""
-        with open(path, 'r') as f:
-            text = f.read().strip()
+        try:
+            with open(path, 'r') as f:
+                text = f.read().strip()
+        except FileNotFoundError:
+            text = ""
         return text
 
     @staticmethod
     def write(path, text):
         """指定したファイルに指定されたテキストを書き込む関数"""
-        with open(path, 'w') as f:
-            f.write(text)
+        try:
+            with open(path, 'w') as f:
+                f.write(text)
+        except FileNotFoundError:
+            with open(path, 'x') as f:
+                f.write(text)
 
     @staticmethod
     def search(target_name, orgin_dir):
@@ -24,14 +31,6 @@ class FileInterface:
             if target_name in files:
                 return os.path.join(root, target_name)
         return None  # ファイルが見つからなかった場合はNoneを返す
-
-    @staticmethod
-    def read_mini(path, max_chars=1000):
-        """指定したファイルのテキストを指定した文字数以下で返す関数"""
-        text = FileInterface.read(path)
-        cmp_text = FileInterface.compress(text)
-        mini_text = FileInterface.tail_slice(cmp_text, max_chars)
-        return mini_text
 
     @staticmethod
     def compress(text):
@@ -45,6 +44,11 @@ class FileInterface:
         return "\n".join(non_blank_lines)
 
     @staticmethod
+    def head_slice(text, max_chars):
+        """指定した文字数以上の場合、先頭を優先して返す関数"""
+        return text if len(text) < max_chars else text[:max_chars]
+
+    @staticmethod
     def tail_slice(text, max_chars):
-        """指定した文字数以上の場合、先頭から削る関数"""
+        """指定した文字数以上の場合、末尾を優先して返す関数"""
         return text if len(text) < max_chars else text[-max_chars:]

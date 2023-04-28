@@ -1,7 +1,8 @@
 """GPT仲介モジュール"""
 
-import openai
 import os
+import openai
+from janome.tokenizer import Tokenizer
 
 class GPTInterface:
     """GPTとの通信を行うクラス"""
@@ -27,5 +28,14 @@ class GPTInterface:
             stop=None,
             temperature=0.7,
         )
-
         return response.choices[0].text.strip()
+
+    @staticmethod
+    def count_tokens(text):
+        t = Tokenizer()
+        tokens = t.tokenize(text)
+        return len(list(tokens))
+
+    @staticmethod
+    def sub_japanese(text):
+        return re.sub('[ぁ-んァ-ン一-龥]', '', text)
