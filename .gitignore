@@ -1,3 +1,4 @@
 target_project/*
 !target_project/.gitkeep
+!target_project/logs
 src/__pycache__
