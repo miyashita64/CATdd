@@ -59,9 +59,9 @@ class SourceCodeGenerator:
         cmds = {
             "main": f"Implement the source code for class '{class_name}' that satisfies the following conditions"\
                     f" using {prg_lang} with '{cmt_lang}' comments.\n",
-            "only_header" : " - Of the two files, header file and source file, only the header file should be implemented.\n",
-            "only_source" : " - Of the two, header file and source file, only the source file should be implemented.\n",
-            "pass_test"   : "\n - Satisfy all of the following test cases.\n\n",
+            "only_header" : " - Only the header file must be implemented out of the two files, header file and source file.\n",
+            "only_source" : " - Only the source file must be implemented out of the two files, header file and source file.\n",
+            "pass_test"   : "\n - Satisfy all of the following test cases. However, it is not necessary to run the tests.\n\n",
             "based_source": "\n - Based on the following source code.\n\n",
             "based_header": "\n - Based on the following header file.\n\n",
         }

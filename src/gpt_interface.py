@@ -26,7 +26,7 @@ class GPTInterface:
             max_tokens=1024,
             n=1,
             stop=None,
-            temperature=0.7,
+            temperature=0.8,
         )
         return response.choices[0].text.strip()
 

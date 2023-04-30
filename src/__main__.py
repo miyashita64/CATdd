@@ -10,7 +10,7 @@ from source_code_generator import SourceCodeGenerator, GenType
 def main():
     print("\n[CATdd START]\n")
     # YAMLファイルの読み取り
-    print("Loading 'cardd.yaml' ... ", end="")
+    print("Loading 'catdd.yaml' ... ", end="")
     with open('catdd.yaml', 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     print("Finish!")
