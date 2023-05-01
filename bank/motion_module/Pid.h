@@ -23,14 +23,6 @@ class Pid {
    */
   void setPidGain(double _kp, double _ki, double _kd);
 
-  /**
-   * @brief PIDを計算する
-   * @param currentValue 現在値
-   * @param delta 周期[ms](デフォルト値0.01[10ms]、省略可)
-   * @return PIDの計算結果(操作量)
-   */
-  double calculatePid(double currentValue, double delta = 0.01);
-
  private:
   PidGain gain;
   double preDeviation;  //前回の偏差
