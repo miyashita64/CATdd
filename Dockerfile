@@ -47,8 +47,8 @@ RUN cd /root/CATdd/target_project \
     && git reset --hard 5c01965d978bef7fc319b8612ba8828304ca5c36 \
     && rm module/Motion/*
 
-COPY bank/motion_module/* target_project/etrobocon2022/module/Motion/
-COPY bank/test/* target_project/etrobocon2022/test/
+# COPY bank/motion_module/* target_project/etrobocon2022/module/Motion/
+# COPY bank/test/* target_project/etrobocon2022/test/
 COPY bank/Atm.* target_project/etrobocon2022/module/
 
 CMD ["/bin/sh"]
