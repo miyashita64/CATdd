@@ -18,10 +18,11 @@ class ResultAnalyzer:
 
         # 整形
         failed_test_datas = []
-        failed_test_paths = list(set(map(lambda e: e["path"], errors)))
-        for test_path in failed_test_paths:
+        failed_test_class_names = list(set(map(lambda e: e["class_name"], errors)))
+        for class_name in failed_test_class_names:
             test_data = {
-                "path": test_path,
+                "class_name": class_name,
+                "path": list(set(map(lambda e: e["path"], errors)))[0],
                 "testcase_names": list(set(map(lambda e: e["testcase_name"], errors))),
                 "labels": list(set(map(lambda e: e["label"], errors))),
             }
@@ -49,6 +50,7 @@ class ResultAnalyzer:
             testcase_name_match = re.search(testcase_name_pattern, pre_line)
             if no_such_file_match:
                 error = {
+                    "class_name": no_such_file_match.group(3).split(".")[0],
                     "path": no_such_file_match.group(1),
                     "line": int(no_such_file_match.group(2)),
                     "message": line,
@@ -57,8 +59,10 @@ class ResultAnalyzer:
                 }
                 errors.append(error)
             elif has_no_member_match:
+                path = has_no_member_match.group(1)
                 error = {
-                    "path": has_no_member_match.group(1),
+                    "class_name": path.split("/")[-1].split("Test.")[0].split(".")[0],
+                    "path": path,
                     "line": int(has_no_member_match.group(2)),
                     "message": line,
                     "testcase_name": "TEST",
@@ -66,8 +70,10 @@ class ResultAnalyzer:
                 }
                 errors.append(error)
             elif undefined_match and testcase_name_match:
+                path = has_no_member_match.group(1)
                 error = {
-                    "path": undefined_match.group(1),
+                    "class_name": path.split("/")[-1].split("Test.")[0].split(".")[0],
+                    "path": path,
                     "line": int(undefined_match.group(2)),
                     "message": ("\n").join([pre_line, line]),
                     "testcase_name": testcase_name_match.group(1),
@@ -99,8 +105,10 @@ class ResultAnalyzer:
                     in_error = False
             elif start_match:
                 in_error = True
+                path = has_no_member_match.group(1)
                 error = {
-                    "path":  start_match.group(1),
+                    "class_name": path.split("/")[-1].split("Test.")[0].split(".")[0],
+                    "path": path,
                     "line":  int(start_match.group(2)),
                     "message": line,
                     "testcase_name": "",

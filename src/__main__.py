@@ -27,7 +27,7 @@ def main():
     # 失敗した各テストについて
     for test_data in failed_test_datas:
         # 失敗したテストケースが対象とするクラス名
-        class_name = test_data["path"].split("/")[-1].split("Test.")[0].split(".")[0]
+        class_name = test_data["class_name"]
         # 失敗したテストケースを一覧表示
         print(f"\nClass {class_name} did not pass the test.")
         for label in test_data["labels"]:

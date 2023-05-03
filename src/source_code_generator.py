@@ -9,7 +9,7 @@ class SourceCodeGenerator:
     @staticmethod
     def generate(gen_type, class_name, prg_lang, cmt_lang, source_code, header_code, failed_testcases):
         # 最大トークン数
-        max_tokens = 2700
+        max_tokens = 2000
         # プロンプトの構成要素の集合
         cmd_switch = {"main", f"only_{gen_type.name}", "pass_test"}
         sub_switch = set()
