@@ -70,7 +70,7 @@ class ResultAnalyzer:
                 }
                 errors.append(error)
             elif undefined_match and testcase_name_match:
-                path = has_no_member_match.group(1)
+                path = undefined_match.group(1)
                 error = {
                     "class_name": path.split("/")[-1].split("Test.")[0].split(".")[0],
                     "path": path,
@@ -105,7 +105,7 @@ class ResultAnalyzer:
                     in_error = False
             elif start_match:
                 in_error = True
-                path = has_no_member_match.group(1)
+                path = start_match.group(1)
                 error = {
                     "class_name": path.split("/")[-1].split("Test.")[0].split(".")[0],
                     "path": path,
