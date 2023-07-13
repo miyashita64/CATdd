@@ -39,3 +39,8 @@ class GPTInterface:
     @staticmethod
     def sub_japanese(text):
         return re.sub('[ぁ-んァ-ン一-龥]', '', text)
+
+if __name__ == "__main__":
+    prompt = input("prompt: ")
+    res = GPTInterface.request(prompt)
+    print(f"res: {res}")
