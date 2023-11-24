@@ -28,7 +28,10 @@ def test():
     test_exec_path = config["target_project"]["test_exec_path"]
     test_exec_cmd = config["target_project"]["test_exec_cmd"]
     tester = Tester(test_exec_path, test_exec_cmd)
-    tester.test()
+    test_result = tester.test()
+    for testcase in test_result.testcase_results:
+        if not testcase.is_passed:
+            print(testcase.stdout)
 
 if __name__ == "__main__":
     """
@@ -43,9 +46,9 @@ if __name__ == "__main__":
         "usage": usage,
         "test": test,
     }
-    # コマンドに応じた処理を実行
     if command in actions:
+        # コマンドに応じた処理を実行
         actions[command]()
-    # 未定義のコマンドの場合は処理を終了
     else:
+        # 未定義のコマンドの場合は処理を終了
         print(f"'{command}' is not defined.")

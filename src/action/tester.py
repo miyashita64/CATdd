@@ -1,19 +1,17 @@
 """テストを実行するクラス"""
 
 import subprocess
+from object.test_result import TestResult
 
 class Tester:
-    log_dir = "logs/"
+    """テストを実行するクラス"""
     def __init__(self, test_exec_path, test_exec_cmd):
+        """コンストラクタ"""
         self.test_exec_path = test_exec_path
         self.test_exec_cmd = test_exec_cmd
 
     def test(self):
+        """テスト実行"""
         command = f"cd {self.test_exec_path} && {self.test_exec_cmd}"
         result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        # print("result.stdout", result.stdout)
-        print("result.stderr", result.stderr)
-
-    @classmethod
-    def log(cls, log_str):
-        pass
+        return TestResult(result.stdout, result.stderr)
