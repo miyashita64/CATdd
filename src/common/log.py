@@ -23,7 +23,7 @@ class Log:
     def log(cls, text, end="\n"):
         """通常の出力"""
         print(text, end=end)
-        cls.log_text += text + end
+        cls.log_text += str(text) + end
     
     @classmethod
     def save(cls):

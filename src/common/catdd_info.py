@@ -18,7 +18,7 @@ class CATddInfo():
         from common.log import Log  # 循環インポートを回避するための苦肉の策
         config_file_path = CATddInfo.path("catdd.yaml")
         Log.log(f"Loading '{config_file_path}' ... ", end="")
-        with open('catdd.yaml', 'r') as f:
+        with open(config_file_path, 'r') as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
         cls.version = config["version"]
         cls.target_project_path = config["target_project"]["path"]

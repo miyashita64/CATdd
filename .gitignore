@@ -1,2 +1,4 @@
 target_project
 target_project/*
+logs/*
+!logs/.gitkeep

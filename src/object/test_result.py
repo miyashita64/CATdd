@@ -2,6 +2,7 @@
 
 import re
 from common.log import Log
+from object.test_code import TestCode
 
 class TestResult:
     """テスト結果を保持するクラス"""
@@ -42,6 +43,7 @@ class TestResult:
                 if len(failed_spans) > 0:
                     # テストに失敗した場合
                     end_span = failed_spans[0]
+                    
             if end_span is not None:
                 # テストケースの範囲を特定できた場合
                 testcase_stdout = self.stdout[start_match.span()[0]:end_span[1]]
@@ -53,8 +55,21 @@ class TestResult:
 
 class TestcaseResult:
     """テストケース毎のテスト結果を保持する"""
+
     def __init__(self, name, is_testcase_passed, stdout):
         """コンストラクタ"""
         self.name = name
         self.is_passed = is_testcase_passed
         self.stdout = stdout
+        failed_test_file_path_pattern = r"\d+:\s+(?P<test_file_path>\S+?):(?P<assert_row>\d+):\sFailure"
+        try:
+            match = re.search(failed_test_file_path_pattern, self.stdout)
+            self.file_path = match.group("test_file_path")
+            self.assert_row = int(match.group("assert_row"))
+            test_code = TestCode(self.file_path)
+            self.code = test_code.slice_testcase(self.assert_row)
+        except Exception as e:
+            print(e)
+            self.file_path = ""
+            self.assert_row = -1
+            self.code = ""

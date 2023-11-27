@@ -30,6 +30,7 @@ def test():
     for testcase in test_result.testcase_results:
         if not testcase.is_passed:
             Log.log(testcase.stdout)
+            Log.log(testcase.code)
 
 if __name__ == "__main__":
     """
