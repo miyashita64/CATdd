@@ -1,0 +1,46 @@
+[36musage[39m: show CATdd usage
+[36mtest[39m: test target project
+Loading '/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/catdd.yaml' ... [32mFinish![39m
+
+[31m!!! 'AtmTest.getBalanceDefaultTest' may have been interrupted !!![39m
+
+
+[31m!!! 'AtmTest.getBalanceInitTest' may have been interrupted !!![39m
+
+
+[31m!!! 'AtmTest.transferTest' may have been interrupted !!![39m
+
+
+[31m!!! 'AtmTest.transferLargerTest' may have been interrupted !!![39m
+
+
+[31m!!! 'AtmTest.transferMinusTest' may have been interrupted !!![39m
+
+
+[31m!!! 'AtmTest.depositTest' may have been interrupted !!![39m
+
+
+[31m!!! 'AtmTest.depositMinusTest' may have been interrupted !!![39m
+
+Loading '/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/catdd.yaml' ... [32mFinish![39m
+
+[31m!!! Could not check completion of the 'AtmTest.getBalanceDefaultTest' !!![39m
+
+
+[31m!!! Could not check completion of the 'AtmTest.getBalanceInitTest' !!![39m
+
+
+[31m!!! Could not check completion of the 'AtmTest.transferTest' !!![39m
+
+
+[31m!!! Could not check completion of the 'AtmTest.transferLargerTest' !!![39m
+
+
+[31m!!! Could not check completion of the 'AtmTest.transferMinusTest' !!![39m
+
+
+[31m!!! Could not check completion of the 'AtmTest.depositTest' !!![39m
+
+
+[31m!!! Could not check completion of the 'AtmTest.depositMinusTest' !!![39m
+

@@ -5,33 +5,31 @@ ex) $ python -B src コマンド
 """
 
 import sys
-import yaml
+from common.catdd_info import CATddInfo
+from common.log import Log
 from action.tester import Tester
 
-def load_catdd_config():
-    """CATddの設定ファイルを読み込む"""
-    config_file_path = "catdd.yaml"
-    print(f"Loading '{config_file_path}' ... ", end="")
-    with open('catdd.yaml', 'r') as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-    print("Finish!")
-    return config
+def init():
+    """初期化に必要な処理"""
+    CATddInfo.load()
 
 def usage():
     """使い方表示"""
-    usage_str = "usage: show CATdd usage"
-    print(usage_str)
+    usage_strs = {
+        "usage": "show CATdd usage",
+        "test": "test target project",
+    }
+    for command in usage_strs:
+        Log.info(command, end="")
+        Log.log(f": {usage_strs[command]}")
 
 def test():
     """テスト実行"""
-    config = load_catdd_config()
-    test_exec_path = config["target_project"]["test_exec_path"]
-    test_exec_cmd = config["target_project"]["test_exec_cmd"]
-    tester = Tester(test_exec_path, test_exec_cmd)
+    tester = Tester()
     test_result = tester.test()
     for testcase in test_result.testcase_results:
         if not testcase.is_passed:
-            print(testcase.stdout)
+            Log.log(testcase.stdout)
 
 if __name__ == "__main__":
     """
@@ -43,12 +41,18 @@ if __name__ == "__main__":
     command = args[1] if len(args) >= 2 else "usage"
     # 各コマンドに対して関数を設定
     actions = {
-        "usage": usage,
         "test": test,
     }
     if command in actions:
-        # コマンドに応じた処理を実行
-        actions[command]()
+        try:
+            init()
+            # コマンドに応じた処理を実行
+            actions[command]()
+        finally:
+            Log.save()
     else:
-        # 未定義のコマンドの場合は処理を終了
-        print(f"'{command}' is not defined.")
+        if command != "usage":
+            # 未定義のコマンドの場合は処理を終了
+            Log.danger(f"'{command}' is not defined.")
+        # 使い方を表示
+        usage()

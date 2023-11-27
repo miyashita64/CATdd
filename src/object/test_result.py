@@ -1,6 +1,7 @@
 """テスト結果を保持するクラス"""
 
 import re
+from common.log import Log
 
 class TestResult:
     """テスト結果を保持するクラス"""
@@ -46,8 +47,8 @@ class TestResult:
                 testcase_stdout = self.stdout[start_match.span()[0]:end_span[1]]
                 testcase_results += [TestcaseResult(testcase_name, is_testcase_passed, testcase_stdout)]
             else:
-                # テストケースの終了を検出できなかった場合
-                print(f"\n\033[31m!!! '{testcase_name}' may have been interrupted !!!\033[0m\n")
+                # テストケースの終了を検出できなかった場合(基本的に起きないと想定している)
+                Log.danger(f"Could not confirm completion of the '{testcase_name}'")
         return testcase_results
 
 class TestcaseResult:
