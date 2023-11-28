@@ -8,6 +8,7 @@ import sys
 from common.catdd_info import CATddInfo
 from common.log import Log
 from action.tester import Tester
+from action.source_code_generator import SourceCodeGenerator
 
 def init():
     """初期化に必要な処理"""
@@ -27,10 +28,14 @@ def test():
     """テスト実行"""
     tester = Tester()
     test_result = tester.test()
-    for testcase in test_result.testcase_results:
-        if not testcase.is_passed:
-            Log.log(testcase.stdout)
-            Log.log(testcase.code)
+    return test_result
+
+def source_code_generate():
+    """ソースコード生成"""
+    test_result = test()
+    generator = SourceCodeGenerator()
+    source_codes = generator.generate(test_result)
+    Log.log(source_codes)
 
 if __name__ == "__main__":
     """
@@ -43,12 +48,15 @@ if __name__ == "__main__":
     # 各コマンドに対して関数を設定
     actions = {
         "test": test,
+        "generate": source_code_generate,
     }
     if command in actions:
         try:
             init()
             # コマンドに応じた処理を実行
             actions[command]()
+        except Exception as e:
+            Log.danger(f"\n{e}\n")
         finally:
             Log.save()
     else:

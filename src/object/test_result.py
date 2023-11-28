@@ -62,14 +62,13 @@ class TestcaseResult:
         self.is_passed = is_testcase_passed
         self.stdout = stdout
         failed_test_file_path_pattern = r"\d+:\s+(?P<test_file_path>\S+?):(?P<assert_row>\d+):\sFailure"
-        try:
-            match = re.search(failed_test_file_path_pattern, self.stdout)
+        match = re.search(failed_test_file_path_pattern, self.stdout)
+        if match is not None:
             self.file_path = match.group("test_file_path")
             self.assert_row = int(match.group("assert_row"))
             test_code = TestCode(self.file_path)
             self.code = test_code.slice_testcase(self.assert_row)
-        except Exception as e:
-            print(e)
+        else:
             self.file_path = ""
             self.assert_row = -1
             self.code = ""
