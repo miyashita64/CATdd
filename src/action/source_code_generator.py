@@ -1,3 +1,6 @@
+from llm.gpt_interface import GPTInterface
+from object.source_code import SourceCode
+
 class SourceCodeGenerator:
     def generate(self, test_result):
         # テスト結果をテスト対象毎にグルーピング
@@ -13,6 +16,11 @@ class SourceCodeGenerator:
         for test_target in test_targets:
             testcase_results = test_targets[test_target]
             failed_testcase_prompt = [testcase_result.code + "\n" + testcase_result.stdout for testcase_result in testcase_results]
-            return failed_testcase_prompt
-
-        return test_targets
+            response = GPTInterface.request("以下のエラーを解決して。\n" + "\n".join(failed_testcase_prompt))
+            print("~~~~~~~~~~~~~~~~~~~~")
+            print("\n".join(failed_testcase_prompt))
+            print("====================")
+            print(response)
+            print("#####################")
+            source_codes += [SourceCode("", response)]
+        return source_codes

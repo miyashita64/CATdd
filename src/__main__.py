@@ -35,7 +35,7 @@ def source_code_generate():
     test_result = test()
     generator = SourceCodeGenerator()
     source_codes = generator.generate(test_result)
-    Log.log(source_codes)
+    Log.log(source_codes[0].code)
 
 if __name__ == "__main__":
     """
