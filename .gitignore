@@ -1,7 +1,8 @@
 target_project
 target_project/*
 logs/*
-logs/latest.log
 !logs/.gitkeep
+output/*
+!output/.gitkeep
 src/llm/codellama
 src/llm/codellama/*

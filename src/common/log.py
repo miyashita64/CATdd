@@ -32,6 +32,7 @@ class Log:
             f.write(cls.log_text)
         cls.log_text = ""
 
+    """ログのバリエーション"""
     @classmethod
     def info(cls, text, end="\n"):
         """重要情報"""
@@ -56,6 +57,7 @@ class Log:
         danger_text = f"\n{Log.color_es(Color.RED)}!!! {text} !!!{Log.color_es(Color.DEFAULT)}\n"
         cls.log(danger_text, end)
 
+    """エスケープシーケンス"""
     @staticmethod
     def color_es(color: Color):
         """文字色を指定するエスケープシーケンスを返す"""

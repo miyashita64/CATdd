@@ -59,16 +59,21 @@ class TestcaseResult:
     def __init__(self, name, is_testcase_passed, stdout):
         """コンストラクタ"""
         self.name = name
+        self.class_name = name.split(".")[0]
+        if self.class_name.endswith('Test'):                                        
+            self.class_name = self.class_name[:-4]                                             
         self.is_passed = is_testcase_passed
         self.stdout = stdout
         failed_test_file_path_pattern = r"\d+:\s+(?P<test_file_path>\S+?):(?P<assert_row>\d+):\sFailure"
         match = re.search(failed_test_file_path_pattern, self.stdout)
         if match is not None:
+            # テストケースが失敗していた場合
             self.file_path = match.group("test_file_path")
             self.assert_row = int(match.group("assert_row"))
             test_code = TestCode(self.file_path)
             self.code = test_code.slice_testcase(self.assert_row)
         else:
+            # テストケース失敗が確認できなかった場合
             self.file_path = ""
             self.assert_row = -1
             self.code = ""
