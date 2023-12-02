@@ -43,7 +43,6 @@ class TestResult:
                 if len(failed_spans) > 0:
                     # テストに失敗した場合
                     end_span = failed_spans[0]
-                    
             if end_span is not None:
                 # テストケースの範囲を特定できた場合
                 testcase_stdout = self.stdout[start_match.span()[0]:end_span[1]]
