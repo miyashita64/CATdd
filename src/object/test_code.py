@@ -1,5 +1,6 @@
 import re
 from common.log import Log
+from common.file_interface import FileInterface
 
 class TestCode:
     """テストコードを保持するクラス"""
@@ -8,8 +9,8 @@ class TestCode:
         """コンストラクタ"""
         self.path = file_path
         self.lines = []
-        with open(self.path, 'r') as f:
-            self.lines = f.read().split("\n")
+        self.code = FileInterface.read(self.path)
+        self.lines = self.code.split("\n")
 
     def slice_testcase(self, row):
         """指定された行を含むテストケースのコードを抽出する"""
@@ -23,7 +24,7 @@ class TestCode:
         recursive_text_count = code.rfind("}")
         if target_text_count < 0:
             # 上方向に{がない場合、テストケースが閉じられていないため異常
-            Log.danger("Could not found testcase start code for assert in {self.file_path}'")
+            Log.danger(f"Could not found testcase start code for assert in {self.file_path}'")
             exit()
         elif target_text_count > recursive_text_count:
             if nest == 0:
@@ -42,7 +43,7 @@ class TestCode:
         recursive_text_count = code.find("{")
         if target_text_count < 0:
             # 下方向に}がない場合、テストケースが閉じられていないため異常
-            Log.danger("Could not found testcase end code for assert in {self.file_path}'")
+            Log.danger(f"Could not found testcase end code for assert in {self.file_path}'")
             exit()
         elif recursive_text_count < 0 or target_text_count < recursive_text_count:
             if nest == 0:

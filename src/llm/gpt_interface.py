@@ -11,29 +11,18 @@ class GPTInterface:
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     @classmethod
-    def request(cls, model, user_prompt):
+    def request(cls, user_prompt):
         """受け取ったpromptをOpenAI APIに送信し、レスポンスを返す."""
-        available_models_request = {
-            "text-davinci-003": cls.request_text_davinci_003,
-            "gpt-3.5-turbo": cls.request_gpt_3_5_turbo,
-            "gpt-4": cls.request_gpt_4
-        }
-        only_prompt_models = ["text-davinci-003"]
-        system_prompt = "You are a helpful assistant. "
-        try:
-            if model in available_models_request:
-                if model in only_prompt_models:
-                    request_value = system_prompt + "\n" + user_prompt
-                else:
-                    request_value = [{'role': 'system', 'content': system_prompt},
-                                {'role': 'user', 'content': user_prompt}]
-                response = available_models_request[model](request_value)                
-                return response
-            else:
-                raise Exception(f"Model \"{model}\" is undefined")
-        except Exception as e:
-            print(e)
-            exit(1)
+        return GPTInterface.request_text_davinci_003(user_prompt)
+    
+    @classmethod
+    def request_code(cls, user_prompt):
+        """受け取った情報を送信し、ソースコードを返す."""
+        system_prompt = "You are a programmer. Implement the source code as requested. No commentary required. Return the full code, including the non-fixed parts."
+        messages = [{'role': 'system', 'content': system_prompt},
+                    {'role': 'user', 'content': user_prompt},
+                    {'role': 'assistant', 'content': "### After correction:\n"}]
+        return GPTInterface.request_gpt_3_5_turbo(messages)
 
     @classmethod
     def request_text_davinci_003(cls, prompt):
@@ -65,5 +54,5 @@ class GPTInterface:
 
 if __name__ == "__main__":
     prompt = input("prompt: ")
-    res = GPTInterface.request_gpt_4(prompt)
+    res = GPTInterface.request_gpt_3_5_turbo(prompt)
     print(f"\033[36mres: {res}\033[0m")

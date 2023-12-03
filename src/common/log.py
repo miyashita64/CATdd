@@ -28,8 +28,8 @@ class Log:
     @classmethod
     def save(cls):
         """ファイル書き出し"""
-        with open(cls.output_path, mode="a") as f:
-            f.write(cls.log_text)
+        from common.file_interface import FileInterface # 循環インポートを回避するための苦肉の策
+        FileInterface.write(cls.output_path, cls.log_text)
         cls.log_text = ""
 
     """ログのバリエーション"""
@@ -48,7 +48,7 @@ class Log:
     @classmethod
     def warning(cls, text, end="\n"):
         """警告"""
-        warning_text = f"{Log.bg_color_es(Color.YELLOW)}{text}{Log.bg_color_es(Color.DEFAULT)}"
+        warning_text = f"{Log.color_es(Color.YELLOW)}{text}{Log.color_es(Color.DEFAULT)}"
         cls.log(warning_text, end)
 
     @classmethod
