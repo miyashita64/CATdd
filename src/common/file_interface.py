@@ -36,3 +36,14 @@ class FileInterface:
                 return os.path.join(root, target_file_name)
         Log.warning("Failed!")
         return None  # ファイルが見つからなかった場合はNoneを返す
+
+    @staticmethod
+    def search_all(pattern, dir_path):
+        """指定した名前のファイルを指定したディレクトリから探索し、そのパスを返す関数"""
+        Log.log(f"Searching \"{pattern}\" from \"{dir_path}\" ... ", end="")
+        file_paths = []
+        for root, dirs, files in os.walk(dir_path):
+            for file in files:
+                if re.match(pattern, file):
+                    file_paths.append(os.path.join(root, file))
+        return file_paths

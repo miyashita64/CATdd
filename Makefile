@@ -1,3 +1,4 @@
+### Actions
 usage:
 	@poetry run python -B src usage
 
@@ -7,6 +8,10 @@ test:
 gen:
 	@poetry run python -B src generate
 
+base:
+	@poetry run python -B src base
+
+### Develop
 log:
 	@cat logs/latest.log
 

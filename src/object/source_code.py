@@ -8,9 +8,14 @@ class SourceCode:
             self.code = FileInterface.read(self.path)
         else:
             self.code = code
-        self.lines = code.split("\n")
+        self.lines = self.code.split("\n")
 
     def save(self):
         """ファイル書き出し"""
         Log.info(f"write source code to \"{self.path}\"")
         FileInterface.write(self.path, self.code)
+
+    def copy(self):
+        """自身と同じメンバ変数を持つSourceCodeを返す"""
+        copy_source_code = SourceCode(self.path, self.code)
+        return copy_source_code

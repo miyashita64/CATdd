@@ -5,10 +5,12 @@ ex) $ python -B src アクション
 """
 
 import sys
+import time
 from common.catdd_info import CATddInfo
 from common.log import Log
 from action.tester import Tester
 from action.source_code_generator import SourceCodeGenerator
+from action.base_tester import BaseTester
 
 def init():
     """初期化に必要な処理"""
@@ -44,6 +46,11 @@ def test():
         Log.log(test_result.stderr)
     return test_result
 
+def is_based_test():
+    """ソースコードがテストケースに基づいているかを判定"""
+    base_tester = BaseTester()
+    base_tester.all_test()
+
 def source_code_generate():
     """ソースコード生成"""
     tester = Tester()
@@ -65,16 +72,27 @@ if __name__ == "__main__":
     actions = {
         "test": test,
         "generate": source_code_generate,
+        "base": is_based_test,
     }
     if action in actions:
+        # 処理開始
+        Log.info("\nCATdd START\n")
+        # 処理開始時間の記録
+        start_time = time.time()
         try:
-            Log.info("\nCATdd START\n")
             init()
             # アクションに応じた処理を実行
             actions[action]()
         except Exception as e:
             Log.danger(f"\n{e}\n")
         finally:
+            # 処理時間の計測と整形
+            processing_seconds = time.time() - start_time
+            minutes, seconds = divmod(processing_seconds, 60)
+            hours, minutes = divmod(minutes, 60)
+            # 処理時間の表示
+            Log.info(f"\nProcessing time: {int(hours):2d}:{int(minutes):02d}:{int(seconds):02d}")
+            # 処理終了
             Log.info("\nCATdd COMPLETE\n")
             Log.save()
     else:
