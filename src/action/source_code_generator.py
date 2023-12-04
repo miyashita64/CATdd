@@ -49,7 +49,7 @@ class SourceCodeGenerator:
                 file_type_code = existed_header_code if file_type == "header" else existed_source_code
                 # 今対象としていないコード[source/header]について
                 another_type = "source" if file_type == "header" else "header"
-                another_type_code =  existed_source_code if another_type == "header" else existed_header_code
+                another_type_code =  existed_source_code if file_type == "header" else existed_header_code
                 # プロンプトのパーツ作成
                 how_generate_prompt = "generating new code"
                 base_code_prompt = ""
@@ -59,15 +59,16 @@ class SourceCodeGenerator:
                     base_code_prompt = f"\n### {file_type} file (base code):\n{existed_source_code}\n"
                 another_code_prompt = ""
                 if another_type_code != "":
-                    another_code_prompt = f"\n### {another_type} file: {another_type_code}\n"
+                    another_code_prompt = f"\n### {another_type} file:\n{another_type_code}\n"
                 # プロンプト作成
                 generate_code_prompt = f"Implement a {file_type} file by {how_generate_prompt} that will pass the following test cases.\n" \
                                      + f"However, only the {file_type} file out of the two files, source file and header file.\n" \
                                      + f"\n### Failed test cases to pass:\n{failed_testcase_prompt}\n" \
                                      + base_code_prompt \
                                      + another_code_prompt
+                assistant_prompt = f"### correction {file_type} file"
                 # プロンプトを送信しソースコード生成
-                response = GPTInterface.request_code(generate_code_prompt)
+                response = GPTInterface.request_code(generate_code_prompt, assistant_prompt)
                 source_code_path = file_type_path if file_type_path is not None else CATddInfo.path(f"output/{class_name}.{file_type_extension}")
                 source_codes += [SourceCode(source_code_path, response)]
                 # ヘッダファイルを生成した際に、ソースコードに反映するために、ヘッダファイルのコードを更新する
@@ -104,7 +105,7 @@ class SourceCodeGenerator:
             file_type_code = bug_header_code if file_type == "header" else bug_source_code
             # 今対象としていないコード[source/header]について
             another_type = "source" if file_type == "header" else "header"
-            another_type_code =  bug_source_code if another_type == "header" else bug_header_code
+            another_type_code =  bug_source_code if file_type == "header" else bug_header_code
             # プロンプトのパーツ作成
             how_generate_prompt = "generating new code"
             base_code_prompt = ""
@@ -114,7 +115,7 @@ class SourceCodeGenerator:
                 base_code_prompt = f"\n### {file_type} file (base code):\n{bug_source_code}\n"
             another_code_prompt = ""
             if another_type_code != "":
-                another_code_prompt = f"\n### {another_type} file: {another_type_code}\n"
+                another_code_prompt = f"\n### {another_type} file:\n{another_type_code}\n"
             test_code_prompt = ""
             if test_file_path != "":
                 test_code = FileInterface.read(test_file_path)
@@ -126,8 +127,9 @@ class SourceCodeGenerator:
                                     + test_code_prompt \
                                     + base_code_prompt \
                                     + another_code_prompt
+            assistant_prompt = f"### correction {file_type} file"
             # プロンプトを送信しソースコード生成
-            response = GPTInterface.request_code(generate_code_prompt)
+            response = GPTInterface.request_code(generate_code_prompt, assistant_prompt)
             source_code_path = file_type_path if file_type_path is not None else CATddInfo.path(f"output/{class_name}.{file_type_extension}")
             source_codes += [SourceCode(source_code_path, response)]
             # ヘッダファイルを生成した際に、ソースコードに反映するために、ヘッダファイルのコードを更新する

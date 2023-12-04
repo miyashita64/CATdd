@@ -11,8 +11,8 @@ class TestResult:
         self.stdout = result_stdout
         self.stderr = result_stderr
         self.testcase_results = self.generate_testcase_results()
-        self.is_passed = result_stderr == ""
-        self.is_exec_test = self.is_passed or len(self.testcase_results) > 0
+        self.is_exec_test = len(self.testcase_results) > 0
+        self.is_passed = self.is_exec_test and len([result for result in self.testcase_results if not result.is_passed]) == 0
 
     def generate_testcase_results(self):
         """標準出力からテストケース毎の結果を判定する"""

@@ -16,12 +16,13 @@ class GPTInterface:
         return GPTInterface.request_text_davinci_003(user_prompt)
     
     @classmethod
-    def request_code(cls, user_prompt):
+    def request_code(cls, user_prompt, assistant_prompt=""):
         """受け取った情報を送信し、ソースコードを返す."""
-        system_prompt = "You are a programmer. Implement the source code as requested. No commentary required. Return the full code, including the non-fixed parts."
+        system_prompt = "You are a programmer. Implement the source code as requested. Return the full code, including the non-fixed parts. Please return code only."
         messages = [{'role': 'system', 'content': system_prompt},
                     {'role': 'user', 'content': user_prompt},
-                    {'role': 'assistant', 'content': "### After correction:\n"}]
+                    {'role': 'assistant', 'content': f"{assistant_prompt}\n"}]
+        Log.data(user_prompt)
         return GPTInterface.request_gpt_3_5_turbo(messages)
 
     @classmethod

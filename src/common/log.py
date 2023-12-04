@@ -4,15 +4,16 @@ from common.catdd_info import CATddInfo
 
 class Color(Enum):
     """各色に対応するエスケープシーケンスの値を管理する辞書"""
-    BLACK = 0      # 0
-    RED = 1        # 1
-    GREEN = 2      # 2
-    YELLOW = 3     # 3
-    BLUE = 4       # 4
-    MAGENTA = 5    # 5
-    CYAN = 6       # 6
-    WHITE = 7      # 7
-    DEFAULT = 9    # 9
+    BLACK = 0
+    RED = 1
+    GREEN = 2
+    YELLOW = 3
+    BLUE = 4
+    MAGENTA = 5
+    CYAN = 6
+    WHITE = 7
+    DEFAULT = 9
+    GRAY = 90
 
 class Log:
     """ターミナルやログファイルへの出力を行うクラス"""
@@ -24,6 +25,12 @@ class Log:
         """通常の出力"""
         print(text, end=end)
         cls.log_text += str(text) + end
+    
+    @classmethod
+    def data(cls, text):
+        """標準出力はしないがログに記録する"""
+        text = f"\n{Log.color_es(Color.GRAY)}{text}{Log.color_es(Color.DEFAULT)}\n"
+        cls.log_text += text
     
     @classmethod
     def save(cls):
@@ -61,9 +68,13 @@ class Log:
     @staticmethod
     def color_es(color: Color):
         """文字色を指定するエスケープシーケンスを返す"""
+        if color is Color.GRAY:
+            return "\033[90m"
         return f"\033[3{color.value}m"
 
     @staticmethod
     def bg_color_es(color: Color):
         """文字の背景色を指定するエスケープシーケンスを返す"""
+        if color is Color.GRAY:
+            return "\033[47m"   # 白だけど
         return f"\033[4{color.value}m"
