@@ -28,7 +28,7 @@ class CATddInfo():
         cls.test_exec_cmd = config["target_project"]["test_exec_cmd"]
         cls.program_lang = config["target_project"]["program_lang"]
         cls.comment_lang = config["target_project"]["comment_lang"]
-        Log.success("Finish!")
+        Log.success("Success")
 
     @classmethod
     def path(cls, additional_path):

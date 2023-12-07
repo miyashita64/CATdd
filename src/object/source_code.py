@@ -1,5 +1,4 @@
 import re
-from common.log import Log
 from common.file_interface import FileInterface
 
 class SourceCode:
@@ -25,7 +24,6 @@ class SourceCode:
 
     def save(self):
         """ファイル書き出し"""
-        Log.info(f"write source code to \"{self.path}\"")
         FileInterface.write(self.path, self._code)
 
     def copy(self):

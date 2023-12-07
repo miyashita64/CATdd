@@ -33,17 +33,21 @@ def usage():
 
 def test():
     """テスト実行"""
+    Log.log("Run test ... ")
     tester = Tester()
     test_result = tester.test()
     if test_result.is_passed:
-        Log.success("Test all pass!")
+        # テスト全通過
+        Log.success("\nPasses all tests!!\n")
     elif test_result.is_exec_test:
-        Log.warning("Test failed.")
-        for testcase_result in test_result.testcase_results:
-            if not testcase_result.is_passed:
-                Log.log(testcase_result.stdout)
+        # テストを実行し、パスできなかった
+        failed_testcase_results = [testcase_result for testcase_result in test_result.testcase_results if not testcase_result.is_passed]
+        Log.warning(f"Failed {len(failed_testcase_results)} test.")
+        for failed_testcase_result in failed_testcase_results:
+            Log.log(failed_testcase_result.stdout)
     else:
-        Log.warning("Compoile Error")
+        # テストを実行できなかった
+        Log.warning("Could not run test.")
         Log.log(test_result.stderr)
     return test_result
 
@@ -59,6 +63,7 @@ def source_code_generate():
     generator = SourceCodeGenerator()
     source_codes = generator.generate(test_result)
     for source_code in source_codes:
+        Log.info(f"write source code to \"{self.path}\"")
         source_code.save()
 
 if __name__ == "__main__":
