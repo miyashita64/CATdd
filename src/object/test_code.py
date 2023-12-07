@@ -8,9 +8,19 @@ class TestCode:
     def __init__(self, file_path):
         """コンストラクタ"""
         self.path = file_path
-        self.lines = []
-        self.code = FileInterface.read(self.path)
-        self.lines = self.code.split("\n")
+        self._code = FileInterface.read(self.path)
+
+    @property
+    def code(self):
+        return self._code
+
+    @code.setter
+    def code(self, code):
+        self._code = code
+
+    @property
+    def lines(self):
+        return self._code.split("\n")
 
     def slice_testcase(self, row):
         """指定された行を含むテストケースのコードを抽出する"""
