@@ -63,7 +63,7 @@ def source_code_generate():
     generator = SourceCodeGenerator()
     source_codes = generator.generate(test_result)
     for source_code in source_codes:
-        Log.info(f"write source code to \"{self.path}\"")
+        Log.info(f"write source code to \"{source_code.path}\"")
         source_code.save()
 
 if __name__ == "__main__":

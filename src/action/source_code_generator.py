@@ -23,6 +23,7 @@ class SourceCodeGenerator:
         return source_codes
 
     def generate_passable_code(self, test_result):
+        """テストにパスできるソースコードを生成する"""
         source_codes = []
         # テスト結果をテスト対象のクラス名ごとにグルーピング
         failed_testcase_results = [testcase_result for testcase_result in test_result.testcase_results if not testcase_result.is_passed]
@@ -77,6 +78,7 @@ class SourceCodeGenerator:
         return source_codes
 
     def generate_testable_code(self, test_result):
+        """テスト実行可能なソースコードを生成する"""
         source_codes = []
         # 修正すべきファイルを決定する
         user_prompt = "Extract the path to the file to be corrected from the error text.\n" + test_result.stderr + "\nfile path: "
