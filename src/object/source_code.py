@@ -9,7 +9,7 @@ class SourceCode:
             self._code = FileInterface.read(self.path)
         else:
             self._code = code
-        self._code = self.sub_needless_line_code(code)
+        self._code = self.sub_needless_line_code(self._code)
 
     @property
     def code(self):

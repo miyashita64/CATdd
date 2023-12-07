@@ -22,6 +22,7 @@ def usage():
         "usage": "show CATdd usage",
         "test":  "test target project",
         "gen":   "generate source code that may pass the test",
+        "base":  "check source code is based on test cases",
     }
     Log.log("CATdd Usage: make [ACTION]\n")
     Log.log("available actions:")
