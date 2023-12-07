@@ -82,7 +82,7 @@ if __name__ == "__main__":
     }
     if action in actions:
         # 処理開始
-        Log.info("\nCATdd START\n")
+        Log.info(f"\nCATdd START [{action}]\n")
         # 処理開始時間の記録
         start_time = time.time()
         try:

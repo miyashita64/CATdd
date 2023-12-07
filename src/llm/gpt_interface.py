@@ -22,7 +22,7 @@ class GPTInterface:
         messages = [{'role': 'system', 'content': system_prompt},
                     {'role': 'user', 'content': user_prompt},
                     {'role': 'assistant', 'content': f"{assistant_prompt}\n"}]
-        Log.data(user_prompt)
+        Log.debug(user_prompt)
         return GPTInterface.request_gpt_3_5_turbo(messages)
 
     @classmethod

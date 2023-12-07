@@ -3,6 +3,7 @@ from common.catdd_info import CATddInfo
 from common.log import Log
 from common.file_interface import FileInterface
 from llm.gpt_interface import GPTInterface
+from llm.prompt import Prompt, PromptElement
 from object.source_code import SourceCode
 
 class SourceCodeGenerator:
@@ -40,7 +41,10 @@ class SourceCodeGenerator:
             existed_source_code = "" if existed_source_file_path is None else FileInterface.read(existed_source_file_path)
             # 各テストケースの結果をまとめる
             testcase_results = failed_testcase_results_by_class[class_name]
-            failed_testcase_prompt = "\n".join([testcase_result.code + "\n" + testcase_result.stdout for testcase_result in testcase_results])
+            failed_testcase_prompt_elms = [PromptElement(
+                    f"{testcase_result.code}\n{testcase_result.stdout}\n",
+                    10 if testcase_result is testcase_results[0] else 1
+                ) for testcase_result in testcase_results]
             # ヘッダーファイルとソースファイルについて
             file_types = ["header", "source"]
             for file_type in file_types:
@@ -51,25 +55,37 @@ class SourceCodeGenerator:
                 # 今対象としていないコード[source/header]について
                 another_type = "source" if file_type == "header" else "header"
                 another_type_code =  existed_source_code if file_type == "header" else existed_header_code
+
                 # プロンプトのパーツ作成
-                how_generate_prompt = "generating new code"
-                base_code_prompt = ""
+                # 既存のソースコード[header/source]
+                how_generate_prompt_value = "generating new code"
+                base_code_prompt_value = ""
                 if file_type_code != "":
                     # 既存のソースコードが存在する場合
-                    how_generate_prompt = "rewriting the base code"
-                    base_code_prompt = f"\n### {file_type} file (base code):\n{existed_source_code}\n"
-                another_code_prompt = ""
+                    how_generate_prompt_value = "rewriting the base code"
+                    base_code_prompt_value = f"\n### {file_type} file (base code):\n{existed_source_code}\n"
+                base_code_prompt_elm = PromptElement(base_code_prompt_value, 3)
+                # 既存のソースコードと関連するソースコード[source/header]
+                another_code_prompt_value = ""
                 if another_type_code != "":
-                    another_code_prompt = f"\n### {another_type} file:\n{another_type_code}\n"
+                    another_code_prompt_value = f"\n### {another_type} file:\n{another_type_code}\n"
+                another_code_prompt_elm = PromptElement(another_code_prompt_value, 2)
+
                 # プロンプト作成
-                generate_code_prompt = f"Implement a {file_type} file by {how_generate_prompt} that will pass the following test cases.\n" \
-                                     + f"However, only the {file_type} file out of the two files, source file and header file.\n" \
-                                     + f"\n### Failed test cases to pass:\n{failed_testcase_prompt}\n" \
-                                     + base_code_prompt \
-                                     + another_code_prompt
-                assistant_prompt = f"### correction {file_type} file"
+                generate_code_prompt_value = f"Implement a {file_type} file by {how_generate_prompt_value} that will pass the following test cases.\n" \
+                                           + f"However, only the {file_type} file out of the two files, source file and header file.\n" \
+                                           + f"\n### Failed test cases to pass:\n"
+                generate_code_prompt_elm = PromptElement(generate_code_prompt_value, 100)
+
+                generate_code_prompt = Prompt([generate_code_prompt_elm,
+                                               failed_testcase_prompt_elm,
+                                               base_code_prompt_elm,
+                                               another_code_prompt_elm],
+                                              4096 * 0.5
+                                             )
+                assistant_prompt_value = f"### correction {file_type} file"
                 # プロンプトを送信しソースコード生成
-                response = GPTInterface.request_code(generate_code_prompt, assistant_prompt)
+                response = GPTInterface.request_code(generate_code_prompt.value, assistant_prompt_value)
                 source_code_path = file_type_path if file_type_path is not None else CATddInfo.path(f"output/{class_name}.{file_type_extension}")
                 source_codes += [SourceCode(source_code_path, response)]
                 # ヘッダファイルを生成した際に、ソースコードに反映するために、ヘッダファイルのコードを更新する
@@ -108,30 +124,42 @@ class SourceCodeGenerator:
             # 今対象としていないコード[source/header]について
             another_type = "source" if file_type == "header" else "header"
             another_type_code =  bug_source_code if file_type == "header" else bug_header_code
+
             # プロンプトのパーツ作成
-            how_generate_prompt = "generating new code"
-            base_code_prompt = ""
+            # 既存のソースコード[header/source]
+            how_generate_prompt_value = "generating new code"
+            base_code_prompt_value = ""
             if file_type_code != "":
                 # 既存のソースコードが存在する場合
-                how_generate_prompt = "rewriting the base code"
-                base_code_prompt = f"\n### {file_type} file (base code):\n{bug_source_code}\n"
-            another_code_prompt = ""
+                how_generate_prompt_value = "rewriting the base code"
+                base_code_prompt_value = f"\n### {file_type} file (base code):\n{bug_source_code}\n"
+            base_code_prompt_elm = PromptElement(base_code_prompt_value, 4)
+            # 既存のソースコードと関連するソースコード[source/header]
+            another_code_prompt_value = ""
             if another_type_code != "":
-                another_code_prompt = f"\n### {another_type} file:\n{another_type_code}\n"
-            test_code_prompt = ""
+                another_code_prompt_value = f"\n### {another_type} file:\n{another_type_code}\n"
+            another_code_prompt_elm = PromptElement(another_code_prompt_value, 3)
+            # テストコード
+            test_code_prompt_value = ""
             if test_file_path != "":
                 test_code = FileInterface.read(test_file_path)
-                test_code_prompt = f"\n### However, the code should pass the following tests:\n{test_code}\n"
+                test_code_prompt_value = f"\n### However, the code should pass the following tests:\n{test_code}\n"
+            test_code_prompt_elm = PromptElement(test_code_prompt_value, 2)
+
             # プロンプト作成
-            generate_code_prompt = f"Implement a {file_type} file by {how_generate_prompt} resolve the following errors.\n" \
-                                    + f"However, only the {file_type} file out of the two files, source file and header file.\n" \
-                                    + f"\n### Error:\n{test_result.stderr}" \
-                                    + test_code_prompt \
-                                    + base_code_prompt \
-                                    + another_code_prompt
-            assistant_prompt = f"### correction {file_type} file"
+            generate_code_prompt_value = f"Implement a {file_type} file by {how_generate_prompt_value} resolve the following errors.\n" \
+                                       + f"However, only the {file_type} file out of the two files, source file and header file.\n" \
+                                       + f"\n### Error:\n{test_result.stderr}"
+            generate_code_prompt_elm = PromptElement(generate_code_prompt_value, 100)
+            generate_code_prompt = Prompt([generate_code_prompt_elm,
+                                           test_code_prompt_elm,
+                                           base_code_prompt_elm,
+                                           another_code_prompt_elm],
+                                          4096 * 0.5)
+            assistant_prompt_value = f"### correction {file_type} file"
+
             # プロンプトを送信しソースコード生成
-            response = GPTInterface.request_code(generate_code_prompt, assistant_prompt)
+            response = GPTInterface.request_code(generate_code_prompt.value, assistant_prompt_value)
             source_code_path = file_type_path if file_type_path is not None else CATddInfo.path(f"output/{class_name}.{file_type_extension}")
             source_codes += [SourceCode(source_code_path, response)]
             # ヘッダファイルを生成した際に、ソースコードに反映するために、ヘッダファイルのコードを更新する
