@@ -12,6 +12,9 @@ base:
 	@poetry run python -B src base
 
 ### Develop
+pytest:
+	poetry run pytest tests/
+
 log:
 	@cat logs/latest.log
 
