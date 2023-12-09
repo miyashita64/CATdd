@@ -4,5 +4,3 @@ logs/*
 !logs/.gitkeep
 output/*
 !output/.gitkeep
-src/llm/codellama
-src/llm/codellama/*
