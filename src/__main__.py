@@ -49,7 +49,6 @@ def test():
         # テストを実行できなかった
         Log.warning("Could not run test.")
         Log.log(test_result.stderr)
-    return test_result
 
 def is_based_test():
     """ソースコードがテストケースに基づいているかを判定"""
@@ -58,6 +57,7 @@ def is_based_test():
 
 def source_code_generate():
     """ソースコード生成"""
+    Log.log("Run test ... ")
     tester = Tester()
     test_result = tester.test()
     generator = SourceCodeGenerator()

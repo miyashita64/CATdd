@@ -33,7 +33,7 @@ class SourceCode:
 
     def sub_needless_line_code(self, code):
         """不要な行を削除する"""
-        needless_pattern_texts = [r"^```cpp$", r"^```C\+\+$", r"^```$"]
+        needless_pattern_texts = [r"^```cpp$", r"^```C\+\+$", r"^```$", r"\s*###.+"]
         for pattern_text in needless_pattern_texts:
             pattern = re.compile(pattern_text, re.MULTILINE)
             code = re.sub(pattern, "", code)

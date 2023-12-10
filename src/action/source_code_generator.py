@@ -27,7 +27,7 @@ class SourceCodeGenerator:
         else:
             # テストが実行できなかった場合(コンパイルエラーなど)
             Log.info("Fix compile errors.")
-            Log.log(test_result.stderr)
+            # Log.log(test_result.stderr)
             source_codes = self.generate_testable_code(test_result)
         return source_codes
 
@@ -91,7 +91,7 @@ class SourceCodeGenerator:
                                                another_code_prompt_elm],
                                               4096 * 0.5    # 4096 = GPT-3.5-turboの最大の入出力トークン数
                                              )
-                assistant_prompt_value = f"### correction {file_type} file"
+                assistant_prompt_value = f"### correction {file_type} file:\n"
                 # プロンプトを送信しソースコード生成
                 response = GPTInterface.request_code(generate_code_prompt.value, assistant_prompt_value)
                 source_code_path = file_type_path if file_type_path is not None else CATddInfo.path(f"output/{class_name}.{file_type_extension}")
@@ -104,8 +104,16 @@ class SourceCodeGenerator:
     def generate_testable_code(self, test_result):
         """テスト実行可能なソースコードを生成する"""
         source_codes = []
+
+        # テスト結果(コンパイルエラー)が膨大過ぎる場合を考慮
+        test_result_value = test_result.stderr
+        max_test_result_length = 2000
+        if len(test_result.stderr) > max_test_result_length:
+            # エラー文を短縮する
+            test_result_value = test_result.stderr[:max_test_result_length]
+
         # 修正すべきファイルを決定する
-        user_prompt = "Extract the path to the file to be corrected from the error text.\n" + test_result.stderr + "\nfile path: "
+        user_prompt = "Extract the path to the file to be corrected from the error text.\n" + test_result_value + "\nfile path: "
         bug_source_file_path = GPTInterface.request(user_prompt)
         bug_file_name = bug_source_file_path.split("/")[-1]
         test_file_path = ""
@@ -156,15 +164,15 @@ class SourceCodeGenerator:
 
             # プロンプト作成
             generate_code_prompt_value = f"Implement a {file_type} file by {how_generate_prompt_value} resolve the following errors.\n" \
-                                       + f"However, only the {file_type} file out of the two files, source file and header file.\n" \
-                                       + f"\n### Error:\n{test_result.stderr}"
+                                       + f"Only the {file_type} file out of the two files, source file and header file.\n" \
+                                       + f"\n### Error:\n{test_result_value}"
             generate_code_prompt_elm = PromptElement(generate_code_prompt_value, Priority.GEN.value)
             generate_code_prompt = Prompt([generate_code_prompt_elm,
                                            test_code_prompt_elm,
                                            base_code_prompt_elm,
                                            another_code_prompt_elm],
                                           4096 * 0.5)
-            assistant_prompt_value = f"### correction {file_type} file"
+            assistant_prompt_value = f"### generated {file_type} file:"
 
             # プロンプトを送信しソースコード生成
             response = GPTInterface.request_code(generate_code_prompt.value, assistant_prompt_value)

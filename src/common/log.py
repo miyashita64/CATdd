@@ -23,7 +23,10 @@ class Log:
     @classmethod
     def log(cls, text, end="\n"):
         """通常の出力"""
-        print(text, end=end)
+        if len(text) <= 5000:
+            print(text, end=end)
+        else:
+            print(f"{text[:5000]} ... (after {len(text)-5000} charactors)", end=end)
         cls.log_text += str(text) + end
     
     @classmethod
