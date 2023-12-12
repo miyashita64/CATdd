@@ -61,6 +61,7 @@ class SourceCodeGenerator:
                 file_type_path = existed_header_file_path if file_type == "header" else existed_source_file_path
                 file_type_code = existed_header_code if file_type == "header" else existed_source_code
                 # 今対象としていないコード[source/header]について
+                another_type_extension = "cpp" if file_type == "header" else "h"
                 another_type = "source" if file_type == "header" else "header"
                 another_type_code =  existed_source_code if file_type == "header" else existed_header_code
 
@@ -71,27 +72,36 @@ class SourceCodeGenerator:
                 if file_type_code != "":
                     # 既存のソースコードが存在する場合
                     how_generate_prompt_value = "rewriting the base code"
-                    base_code_prompt_value = f"\n### {file_type} file (base code):\n{existed_source_code}\n"
+                    base_code_prompt_value = f"\n### {file_type} file (base code \"{class_name}.{file_type_extension}\"):\n{existed_source_code}\n"
                 base_code_prompt_elm = PromptElement(base_code_prompt_value, Priority.BASE.value)
                 # 既存のソースコードと関連するソースコード[source/header]
                 another_code_prompt_value = ""
                 if another_type_code != "":
-                    another_code_prompt_value = f"\n### {another_type} file:\n{another_type_code}\n"
+                    another_code_prompt_value = f"\n### {another_type} file (\"{class_name}.{another_type_extension}\"):\n{another_type_code}\n"
                 another_code_prompt_elm = PromptElement(another_code_prompt_value, Priority.ANOTOHER.value)
 
                 # プロンプト作成
                 generate_code_prompt_value = f"Implement a {file_type} file by {how_generate_prompt_value} that will pass the following test cases.\n" \
-                                           + f"However, only the {file_type} file out of the two files, source file and header file.\n" \
+                                           + f"However, only the {file_type} file out of the two files, source file and header file. Please return code only.\n" \
                                            + f"\n### Failed test cases to pass:\n"
                 generate_code_prompt_elm = PromptElement(generate_code_prompt_value, Priority.GEN.value)
 
-                generate_code_prompt = Prompt([generate_code_prompt_elm,
-                                               *failed_testcase_prompt_elms,
-                                               base_code_prompt_elm,
-                                               another_code_prompt_elm],
-                                              4096 * 0.5    # 4096 = GPT-3.5-turboの最大の入出力トークン数
-                                             )
-                assistant_prompt_value = f"### correction {file_type} file:\n"
+                generate_code_prompt = None
+                if file_type == "header":
+                    generate_code_prompt = Prompt([generate_code_prompt_elm,
+                                                *failed_testcase_prompt_elms,
+                                                base_code_prompt_elm],
+                                                4096 * 0.5    # 4096 = GPT-3.5-turboの最大の入出力トークン数
+                                                )
+                else:
+                    generate_code_prompt = Prompt([generate_code_prompt_elm,
+                                                *failed_testcase_prompt_elms,
+                                                base_code_prompt_elm,
+                                                another_code_prompt_elm],
+                                                4096 * 0.5    # 4096 = GPT-3.5-turboの最大の入出力トークン数
+                                                )
+
+                assistant_prompt_value = f"### correction {file_type} file ({class_name}.{file_type_extension}):\n"
                 # プロンプトを送信しソースコード生成
                 response = GPTInterface.request_code(generate_code_prompt.value, assistant_prompt_value)
                 source_code_path = file_type_path if file_type_path is not None else CATddInfo.path(f"output/{class_name}.{file_type_extension}")
@@ -138,6 +148,7 @@ class SourceCodeGenerator:
             file_type_path = bug_header_file_path if file_type == "header" else bug_source_file_path
             file_type_code = bug_header_code if file_type == "header" else bug_source_code
             # 今対象としていないコード[source/header]について
+            another_type_extension = "cpp" if file_type == "header" else "h"
             another_type = "source" if file_type == "header" else "header"
             another_type_code =  bug_source_code if file_type == "header" else bug_header_code
 
@@ -148,12 +159,12 @@ class SourceCodeGenerator:
             if file_type_code != "":
                 # 既存のソースコードが存在する場合
                 how_generate_prompt_value = "rewriting the base code"
-                base_code_prompt_value = f"\n### {file_type} file (base code):\n{bug_source_code}\n"
+                base_code_prompt_value = f"\n### {file_type} file (base code \"{class_name}.{file_type_extension}\"):\n{bug_source_code}\n"
             base_code_prompt_elm = PromptElement(base_code_prompt_value, Priority.BASE.value)
             # 既存のソースコードと関連するソースコード[source/header]
             another_code_prompt_value = ""
             if another_type_code != "":
-                another_code_prompt_value = f"\n### {another_type} file:\n{another_type_code}\n"
+                another_code_prompt_value = f"\n### {another_type} file (\"{class_name}.{another_type_extension}\"):\n{another_type_code}\n"
             another_code_prompt_elm = PromptElement(another_code_prompt_value, Priority.ANOTOHER.value)
             # テストコード
             test_code_prompt_value = ""
@@ -164,14 +175,25 @@ class SourceCodeGenerator:
 
             # プロンプト作成
             generate_code_prompt_value = f"Implement a {file_type} file by {how_generate_prompt_value} resolve the following errors.\n" \
-                                       + f"Only the {file_type} file out of the two files, source file and header file.\n" \
+                                       + f"Only the {file_type} file out of the two files, source file and header file. Please return code only.\n" \
                                        + f"\n### Error:\n{test_result_value}"
             generate_code_prompt_elm = PromptElement(generate_code_prompt_value, Priority.GEN.value)
-            generate_code_prompt = Prompt([generate_code_prompt_elm,
-                                           test_code_prompt_elm,
-                                           base_code_prompt_elm,
-                                           another_code_prompt_elm],
-                                          4096 * 0.5)
+
+            generate_code_prompt = None
+            if file_type == "header":
+                generate_code_prompt = Prompt([generate_code_prompt_elm,
+                                            test_code_prompt_elm,
+                                            base_code_prompt_elm],
+                                            4096 * 0.5    # 4096 = GPT-3.5-turboの最大の入出力トークン数
+                                            )
+            else:
+                generate_code_prompt = Prompt([generate_code_prompt_elm,
+                                            test_code_prompt_elm,
+                                            base_code_prompt_elm,
+                                            another_code_prompt_elm],
+                                            4096 * 0.5    # 4096 = GPT-3.5-turboの最大の入出力トークン数
+                                            )
+
             assistant_prompt_value = f"### generated {file_type} file:"
 
             # プロンプトを送信しソースコード生成

@@ -8,9 +8,12 @@ import sys
 import time
 from common.catdd_info import CATddInfo
 from common.log import Log
+from common.interpreter import Interpreter
+from common.difference import Difference
 from action.tester import Tester
 from action.source_code_generator import SourceCodeGenerator
 from action.base_tester import BaseTester
+from object.source_code import SourceCode
 
 def init():
     """初期化に必要な処理"""
@@ -50,21 +53,54 @@ def test():
         Log.warning("Could not run test.")
         Log.log(test_result.stderr)
 
-def is_based_test():
+def base_test():
     """ソースコードがテストケースに基づいているかを判定"""
     base_tester = BaseTester()
     base_tester.all_test()
 
-def source_code_generate():
+def generate_source_code(test_result = None):
     """ソースコード生成"""
-    Log.log("Run test ... ")
     tester = Tester()
-    test_result = tester.test()
+    if test_result is None:
+        # テスト実行
+        Log.log("Run test ... ")
+        test_result = tester.test()
+
+    Log.log("Generate source code ... ")
     generator = SourceCodeGenerator()
+    # ソースコード生成
     source_codes = generator.generate(test_result)
+    # 生成前のソースコードを保持
+    existed_source_codes = [SourceCode(source_code.path) for source_code in source_codes]
+    # ソースコード書き込み
     for source_code in source_codes:
         Log.info(f"write source code to \"{source_code.path}\"")
         source_code.save()
+    # 生成したソースコードについてテスト
+    do_test = Interpreter.yn("Do test it?")
+    if do_test:
+        test_result = tester.test()
+        # すべてのテストにパスした場合
+        if test_result.is_passed:
+            # テストに基づいているかテスト
+            do_base_test = Interpreter.yn("Do base test it?")
+            if do_base_test:
+                base_tester = BaseTester()
+                # 変更された各ファイルごとに行う
+                for index in range(len(source_codes)):
+                    source_code_lines = source_codes[index].lines
+                    existed_source_code_lines = existed_source_codes[index].lines
+                    # 生成前後のソースコードの差を検出
+                    diff = Difference(source_code_lines, existed_source_code_lines)
+                    # 差の範囲について処理を行う
+                    base_tester.test_by_ranges(source_codes[index].copy(), diff.ranges())
+        # テストが通らない場合、再度生成する
+        else:
+            Log.warning("Test is failed.")
+            do_regenerate = Interpreter.yn("Re genrate source code?")
+            if do_regenerate:
+                generate_source_code(test_result)
+
 
 if __name__ == "__main__":
     """
@@ -77,8 +113,8 @@ if __name__ == "__main__":
     # 各アクションに対して関数を設定
     actions = {
         "test": test,
-        "generate": source_code_generate,
-        "base": is_based_test,
+        "base": base_test,
+        "generate": generate_source_code,
     }
     if action in actions:
         # 処理開始

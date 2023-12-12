@@ -42,30 +42,50 @@ class Log:
         FileInterface.write(cls.output_path, cls.log_text)
         cls.log_text = ""
 
+
     """ログのバリエーション"""
     @classmethod
     def info(cls, text, end="\n"):
         """重要情報"""
-        info_text = f"{Log.color_es(Color.CYAN)}{text}{Log.color_es(Color.DEFAULT)}"
+        info_text = cls.syan_text(text)
         cls.log(info_text, end)
 
     @classmethod
     def success(cls, text, end="\n"):
         """成功や完了"""
-        success_text = f"{Log.color_es(Color.GREEN)}{text}{Log.color_es(Color.DEFAULT)}"
+        success_text = cls.green_text(text)
         cls.log(success_text, end)
 
     @classmethod
     def warning(cls, text, end="\n"):
         """警告"""
-        warning_text = f"{Log.color_es(Color.YELLOW)}{text}{Log.color_es(Color.DEFAULT)}"
+        warning_text = cls.yellow_text(text)
         cls.log(warning_text, end)
 
     @classmethod
     def danger(cls, text, end="\n"):
         """致命的な事態"""
-        danger_text = f"\n{Log.color_es(Color.RED)}!!! {text} !!!{Log.color_es(Color.DEFAULT)}\n"
+        danger_text = cls.red_text(f"\n!!! {text} !!!\n")
         cls.log(danger_text, end)
+
+
+    """色を付けた文字列"""
+    @classmethod
+    def syan_text(cls, text):
+        return f"{Log.color_es(Color.CYAN)}{text}{Log.color_es(Color.DEFAULT)}"
+
+    @classmethod
+    def green_text(cls, text):
+        return f"{Log.color_es(Color.GREEN)}{text}{Log.color_es(Color.DEFAULT)}"
+
+    @classmethod
+    def yellow_text(cls, text):
+        return f"{Log.color_es(Color.YELLOW)}{text}{Log.color_es(Color.DEFAULT)}"
+
+    @classmethod
+    def red_text(cls, text):
+        return f"{Log.color_es(Color.RED)}{text}{Log.color_es(Color.DEFAULT)}"
+
 
     """エスケープシーケンス"""
     @staticmethod
