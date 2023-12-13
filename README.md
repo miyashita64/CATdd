@@ -45,3 +45,23 @@ curl -sSL https://install.python-poetry.org | python3 -
 poetry --version
 ```
 Poetryのバージョンが表示されていればOK
+
+4. OpenAI APIキーの取得と設定
+↓あたりでAPIキーを取得できる
+https://help.openai.com/en/articles/4936850-where-do-i-find-my-api-key
+
+環境変数に`OPENAI_API_KEY`を設定する
+```
+export OPENAI_API_KEY=取得したOpenAI APIキー
+```
+
+## CATddのセットアップ
+1. 必要なパッケージをインストールする
+```
+poetry install
+```
+
+2. catddコマンドの有効化
+```
+source .env
+```
