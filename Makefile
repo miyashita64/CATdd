@@ -20,4 +20,4 @@ log:
 
 clean:
 	cd target_project/tdd-sample/ && git restore .
-	rm logs/latest.log
+	rm logs/latest.log || :

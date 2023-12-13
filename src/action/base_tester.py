@@ -19,7 +19,6 @@ class BaseTester:
     def test_by_ranges(self, original_source_code, target_ranges):
         tester = Tester()
         needless_line_logs_by_file = ""
-        Log.log(target_ranges)
         for target_range in target_ranges:
             try:
                 # 各行についてテストのパスに必要か検証する
@@ -47,7 +46,7 @@ class BaseTester:
                             needless_line_logs += f"{strong_delete_part_line}\n"
                     # 指定した行について、不要と思われる記述があった場合
                     if needless_line_logs != "":
-                        needless_line_logs_by_file += f"{file_path}:{line_num+1}\n{needless_line_logs}\n"
+                        needless_line_logs_by_file += f"{source_code.path}:{line_num+1}\n{needless_line_logs}\n"
             except Exception as e:
                 Log.danger(e)
             finally:
@@ -68,7 +67,6 @@ class BaseTester:
             delete_line = delete_line.replace(keyword, f"\n{keyword}\n")
         # 各要素を行に分割する
         delete_line_parts = delete_line.split("\n")
-        Log.log(delete_line_parts)
 
         # 各要素ごとにその有無がことなる行を生成する
         new_lines = [("", Log.yellow_text(original_delete_line))]  # [(要素を除いた行, 除かれた要素を強調した行)]

@@ -27,7 +27,6 @@ class SourceCodeGenerator:
         else:
             # テストが実行できなかった場合(コンパイルエラーなど)
             Log.info("Fix compile errors.")
-            # Log.log(test_result.stderr)
             source_codes = self.generate_testable_code(test_result)
         return source_codes
 

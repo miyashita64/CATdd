@@ -57,7 +57,6 @@ void Atm::deposit(int amount) {
 }
 """
         diff = Difference(text1.split("\n"), text2.split("\n"))
-        # diff.print()
         diff.line_nums()
         Log.output_path = CATddInfo.path("output/test_difference_print.log")
 
