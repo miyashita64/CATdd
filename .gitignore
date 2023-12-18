@@ -1,5 +1,6 @@
 target_project
 target_project/*
+!target_project/build_opencv.sh
 logs/*
 !logs/.gitkeep
 output/*
