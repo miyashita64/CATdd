@@ -105,7 +105,7 @@ def generate_source_code(test_result = None):
         test_result = tester.test()
         # すべてのテストにパスした場合
         if test_result.is_passed:
-            Log.success("All pass test.\n")
+            Log.success("All pass test.")
             # テストに基づいているかテスト
             do_base_test = Interpreter.yn("Do base test it?")
             if do_base_test:

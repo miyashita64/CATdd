@@ -13,7 +13,10 @@ class GPTInterface:
     @classmethod
     def request(cls, user_prompt):
         """受け取ったpromptをOpenAI APIに送信し、レスポンスを返す."""
-        return GPTInterface.request_text_davinci_003(user_prompt)
+        system_prompt = "Please return path."
+        messages = [{'role': 'system', 'content': system_prompt},
+                    {'role': 'user', 'content': user_prompt}]
+        return GPTInterface.request_gpt_3_5_turbo(messages)
     
     @classmethod
     def request_code(cls, user_prompt, assistant_prompt=""):

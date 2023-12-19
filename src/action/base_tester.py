@@ -44,9 +44,9 @@ class BaseTester:
                         # 指定した要素について、不要と思われる記述があった場合
                         if test_result.is_passed:
                             needless_line_logs += f"{strong_delete_part_line}\n"
-                    # 指定した行について、不要と思われる記述があった場合
-                    if needless_line_logs != "":
-                        needless_line_logs_by_file += f"{source_code.path}:{line_num+1}\n{needless_line_logs}\n"
+                # 指定した行について、不要と思われる記述があった場合
+                if needless_line_logs != "":
+                    needless_line_logs_by_file += f"{source_code.path}:{line_num+1}\n{needless_line_logs}\n"
             except Exception as e:
                 Log.danger(e)
             finally:
