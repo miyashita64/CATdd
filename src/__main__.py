@@ -20,13 +20,15 @@ def init():
     CATddInfo.load()
 
 def usage():
-    """使い方表示"""
+    """使い方表示アクション"""
+    # テキスト設定
     action_usage_strs = {
         "usage": "show CATdd usage",
         "test":  "test target project",
         "gen":   "generate source code that may pass the test",
         "base":  "check source code is based on test cases",
     }
+    # 表示
     Log.log("CATdd Usage: make [ACTION]\n")
     Log.log("available actions:")
     for action in action_usage_strs:
@@ -35,40 +37,56 @@ def usage():
     Log.log("")
 
 def test():
-    """テスト実行"""
+    """テスト実行アクション"""
     Log.log("Run test ... ")
+    # テスト実行
     tester = Tester()
     test_result = tester.test()
+
+    # テスト結果の表示
     if test_result.is_passed:
         # テスト全通過
         Log.success("\nPasses all tests!!\n")
-    elif test_result.is_exec_test:
-        # テストを実行し、パスできなかった
-        failed_testcase_results = [testcase_result for testcase_result in test_result.testcase_results if not testcase_result.is_passed]
-        Log.warning(f"Failed {len(failed_testcase_results)} test.")
-        for failed_testcase_result in failed_testcase_results:
-            Log.log(failed_testcase_result.stdout)
     else:
-        # テストを実行できなかった
-        Log.warning("Could not run test.")
-        Log.log(test_result.stderr)
+        # テストをパスできなかった場合
+        if test_result.is_exec_test:
+            # テストは実行できた場合
+            # 失敗したテストケースを抽出
+            failed_testcase_results = [testcase_result for testcase_result in test_result.testcase_results if not testcase_result.is_passed]
+            Log.warning(f"Failed {len(failed_testcase_results)} test.")
+            # 失敗してたテストケースごとのテスト結果を表示
+            for failed_testcase_result in failed_testcase_results:
+                Log.log(failed_testcase_result.stdout)
+        else:
+            # テストを実行できなかった場合
+            Log.warning("Could not run test.")
+            Log.log(test_result.stderr)
+        # ソースコード生成の実行確認
+        do_gen = Interpreter.yn("Do generate to fix source code by catdd?")
+        if do_gen:
+            # ソースコード生成
+            generate_source_code(test_result)
 
 def base_test():
-    """ソースコードがテストケースに基づいているかを判定"""
+    """ソースコードがテストに基づくか検証するアクション"""
+    # テスト実行
+    Log.log("Run base test ... ")
     base_tester = BaseTester()
     base_tester.all_test()
+    Log.log("Complete base testing.\n")
 
 def generate_source_code(test_result = None):
-    """ソースコード生成"""
+    """ソースコード生成アクション"""
     tester = Tester()
     if test_result is None:
         # テスト実行
         Log.log("Run test ... ")
         test_result = tester.test()
+        Log.log("Complete testing.\n")
 
+    # ソースコード生成
     Log.log("Generate source code ... ")
     generator = SourceCodeGenerator()
-    # ソースコード生成
     source_codes = generator.generate(test_result)
     # 生成前のソースコードを保持
     existed_source_codes = [SourceCode(source_code.path) for source_code in source_codes]
@@ -76,12 +94,16 @@ def generate_source_code(test_result = None):
     for source_code in source_codes:
         Log.info(f"write source code to \"{source_code.path}\"")
         source_code.save()
+    Log.log("Complete source code generation.")
+
     # 生成したソースコードについてテスト
     do_test = Interpreter.yn("Do test it?")
     if do_test:
+        # テスト実行
         test_result = tester.test()
         # すべてのテストにパスした場合
         if test_result.is_passed:
+            Log.log("All pass test.\n")
             # テストに基づいているかテスト
             do_base_test = Interpreter.yn("Do base test it?")
             if do_base_test:

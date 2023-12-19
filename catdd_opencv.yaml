@@ -1,0 +1,8 @@
+version: 1.0
+target_project:
+  path: target_project/opencv
+  source_path: target_project/opencv/modules/imgproc
+  test_exec_path: target_project/opencv/build/bin
+  test_exec_cmd: ./opencv_test_imgproc
+  program_lang: C++
+  comment_lang: japanese

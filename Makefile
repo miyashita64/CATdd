@@ -12,6 +12,21 @@ base:
 	@poetry run python -B src base
 
 
+### Develop
+pytest:
+	poetry run pytest tests/
+
+log:
+	@cat logs/latest.log
+
+clean:
+	cd target_project/tdd-sample/ && git restore .
+	rm logs/latest.log || :
+
+catdd:
+	source .env
+
+
 ### Docker
 docker-setup:
 ifdef OPENAI_API_KEY
@@ -30,15 +45,3 @@ docker-start:
 
 docker-stop:
 	docker stop catdd-container
-
-
-### Develop
-pytest:
-	poetry run pytest tests/
-
-log:
-	@cat logs/latest.log
-
-clean:
-	cd target_project/tdd-sample/ && git restore .
-	rm logs/latest.log || :
