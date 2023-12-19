@@ -89,6 +89,8 @@ def generate_source_code(test_result = None):
     generator = SourceCodeGenerator()
     source_codes = generator.generate(test_result)
     # 生成前のソースコードを保持
+    # TODO: 再生成を選んだ場合、ここで再度ソースコードを取得しなおすため
+    #       再生成前のソースコードとの差分しか base test を実行できない
     existed_source_codes = [SourceCode(source_code.path) for source_code in source_codes]
     # ソースコード書き込み
     for source_code in source_codes:
@@ -103,17 +105,18 @@ def generate_source_code(test_result = None):
         test_result = tester.test()
         # すべてのテストにパスした場合
         if test_result.is_passed:
-            Log.log("All pass test.\n")
+            Log.success("All pass test.\n")
             # テストに基づいているかテスト
             do_base_test = Interpreter.yn("Do base test it?")
             if do_base_test:
                 base_tester = BaseTester()
                 # 変更された各ファイルごとに行う
                 for index in range(len(source_codes)):
+                    Log.log(f"Check \"{source_codes[index].path}\" based on the test.")
                     source_code_lines = source_codes[index].lines
                     existed_source_code_lines = existed_source_codes[index].lines
                     # 生成前後のソースコードの差を検出
-                    diff = Difference(source_code_lines, existed_source_code_lines)
+                    diff = Difference(existed_source_code_lines, source_code_lines)
                     # 差の範囲について処理を行う
                     base_tester.test_by_ranges(source_codes[index].copy(), diff.ranges())
         # テストが通らない場合、再度生成する
