@@ -21,6 +21,7 @@ class BaseTester:
         needless_line_logs_by_file = ""
         for target_range in target_ranges:
             try:
+                needless_line_logs = ""
                 # 各行についてテストのパスに必要か検証する
                 for line_num in tqdm(target_range):
                     source_code = original_source_code.copy()
