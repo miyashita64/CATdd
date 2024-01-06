@@ -40,3 +40,14 @@ class FileInterface:
                 if re.match(pattern, file):
                     file_paths.append(os.path.join(root, file))
         return file_paths
+
+    @staticmethod
+    def parse_path(path):
+        """LLMなどが出力するパスから余計なものを削除する関数"""
+        match = re.search(r'`([^`]+)`', path)
+        if match:
+            path = match.group(1)
+        if len(path.split(":")) > 1:
+            path = path.split(":")[-1]
+        return path.replace("\n", "").replace("`", "")
+        

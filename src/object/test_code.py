@@ -8,10 +8,7 @@ class TestCode:
     def __init__(self, file_path):
         """コンストラクタ"""
         # LLMにパスを聞いた際に「何かしらの説明文:　`パス`」と出力された場合の対処
-        match = re.search(r'`([^`]+)`', path)
-        if match:
-            path = match.group(1)
-        self.path = file_path.replace("\n", "").replace("`", "")
+        self.path = FileInterface.parse_path(file_path)
         self._code = FileInterface.read(self.path)
 
     @property

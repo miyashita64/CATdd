@@ -3,7 +3,7 @@
 import os
 from openai import OpenAI
 from common.log import Log
-
+from common.file_interface import FileInterface
 
 class GPTInterface:
     """GPTとの通信を行うクラス"""
@@ -11,14 +11,13 @@ class GPTInterface:
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     @classmethod
-    def request(cls, user_prompt, assistant_prompt=""):
+    def request_path(cls, user_prompt):
         """受け取ったpromptをOpenAI APIに送信し、レスポンスを返す."""
         system_prompt = "Please return path."
         messages = [{'role': 'system', 'content': system_prompt},
-                    {'role': 'user', 'content': user_prompt}]
-        if assistant_prompt != "":
-            messages += [{'role': 'assistant', 'content': assistant_prompt}]
-        return GPTInterface.request_gpt_3_5_turbo(messages)
+                    {'role': 'user', 'content': user_prompt},
+                    {'role': 'assistant', 'content': "file path: "}]
+        return FileInterface.parse_path(GPTInterface.request_gpt_3_5_turbo(messages))
     
     @classmethod
     def request_code(cls, user_prompt, assistant_prompt=""):

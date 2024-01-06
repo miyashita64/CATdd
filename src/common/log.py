@@ -32,7 +32,8 @@ class Log:
     @classmethod
     def debug(cls, text):
         """標準出力はしないがログに記録する"""
-        text = f"\n{Log.color_es(Color.GRAY)}{text}{Log.color_es(Color.DEFAULT)}\n"
+        # text = f"\n{Log.color_es(Color.GRAY)}{text}{Log.color_es(Color.DEFAULT)}\n"
+        text = f"\n{text}\n"
         cls.log_text += text
     
     @classmethod
