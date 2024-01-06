@@ -75,7 +75,7 @@ def base_test():
     base_tester.all_test()
     Log.log("Complete base testing.\n")
 
-def generate_source_code(test_result = None):
+def generate_source_code(test_result=None):
     """ソースコード生成アクション"""
     tester = Tester()
     if test_result is None:
@@ -96,12 +96,14 @@ def generate_source_code(test_result = None):
     for source_code in source_codes:
         Log.info(f"write source code to \"{source_code.path}\"")
         source_code.save()
-    Log.log("Complete source code generation.")
+    Log.log("Complete source code generation.\n")
 
     # 生成したソースコードについてテスト
-    do_test = Interpreter.yn("Do test it?")
+    # do_test = Interpreter.yn("Do test it?")
+    do_test = True # ソースコード生成後はテストを自動的に実行する
     if do_test:
         # テスト実行
+        Log.log("Run test ... ")
         test_result = tester.test()
         # すべてのテストにパスした場合
         if test_result.is_passed:
@@ -122,6 +124,24 @@ def generate_source_code(test_result = None):
         # テストが通らない場合、再度生成する
         else:
             Log.warning("Test is failed.")
+            # テスト結果の表示
+            if test_result.is_passed:
+                # テスト全通過
+                Log.success("\nPasses all tests!!\n")
+            else:
+                # テストをパスできなかった場合
+                if test_result.is_exec_test:
+                    # テストは実行できた場合
+                    # 失敗したテストケースを抽出
+                    failed_testcase_results = [testcase_result for testcase_result in test_result.testcase_results if not testcase_result.is_passed]
+                    Log.warning(f"Failed {len(failed_testcase_results)} test.")
+                    # 失敗してたテストケースごとのテスト結果を表示
+                    for failed_testcase_result in failed_testcase_results:
+                        Log.log(failed_testcase_result.stdout)
+                else:
+                    # テストを実行できなかった場合
+                    Log.warning("Could not run test.")
+                    Log.log(test_result.stderr)
             do_regenerate = Interpreter.yn("Re genrate source code?")
             if do_regenerate:
                 generate_source_code(test_result)

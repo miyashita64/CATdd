@@ -1,8 +1,0 @@
-version: 1.0
-target_project:
-  path: target_project/applivation_example
-  source_path: target_project/applivation_example/module
-  test_exec_path: target_project/applivation_example
-  test_exec_cmd: bash gtest_all.sh
-  program_lang: C++
-  comment_lang: japanese

@@ -3,7 +3,12 @@ from common.file_interface import FileInterface
 
 class SourceCode:
     def __init__(self, path, code=""):
-        self.path = path
+        # LLMにパスを聞いた際に「何かしらの説明文:　`パス`」と出力された場合の対処
+        match = re.search(r'`([^`]+)`', path)
+        if match:
+            path = match.group(1)
+        self.path = path.replace("\n", "").replace("`", "")
+
         if self.path != "" and code == "":
             self._code = FileInterface.read(self.path)
         else:

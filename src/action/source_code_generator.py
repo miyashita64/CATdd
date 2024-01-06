@@ -52,7 +52,7 @@ class SourceCodeGenerator:
             file_types = ["header", "source"]
             for file_type in file_types:
                 is_header_type = file_type == "header"
-                file_type_extension = ".h" if is_header_type else ".cpp"
+                file_type_extension = "h" if is_header_type else "cpp"
                 file_type_path = existed_header_file_path if is_header_type else existed_source_file_path
                 # プロンプト生成
                 generate_code_prompt = GeneratePassableCodePrompt(class_name, is_header_type, failed_testcase_results, existed_header_code, existed_source_code)
@@ -78,10 +78,13 @@ class SourceCodeGenerator:
             test_result_value = test_result.stderr[:max_test_result_length]
 
         # 修正すべきファイルを決定する
-        user_prompt = "Extract the path to the file to be corrected from the error text.\n" + test_result_value + "\nfile path: "
-        bug_source_file_path = GPTInterface.request(user_prompt)
+        user_prompt = "Extract the path to the file to be corrected from the error text.\n" + test_result_value + "\n"
+        assistant_prompt = "file path: "
+        bug_source_file_path = GPTInterface.request(user_prompt, assistant_prompt)
         bug_file_name = bug_source_file_path.split("/")[-1]
-        test_file_path = ""
+        # 問題が起きているテストコードを特定する
+        user_prompt = "Extract the path from the error text to the test code in which the error is occurring.\n" + test_result_value + "\n"
+        test_file_path = GPTInterface.request(user_prompt, assistant_prompt)
         if "test" in bug_file_name.lower():
             # テストに問題があると判定された場合
             # TDD(CATdd)はテストに問題はないことを前提とするため、テスト対象の問題として扱う
@@ -105,11 +108,11 @@ class SourceCodeGenerator:
         file_types = ["header", "source"]
         for file_type in file_types:
             is_header_type = file_type == "header"
-            file_type_extension = ".h" if is_header_type else ".cpp"
+            file_type_extension = "h" if is_header_type else "cpp"
             file_type_path = bug_header_file_path if is_header_type else bug_source_file_path
             # プロンプト生成
             generate_code_prompt = GenerateTestableCodePrompt(class_name, is_header_type, test_result_value, test_code, bug_header_code, bug_source_code)
-            assistant_prompt_value = f"### generated {file_type} file:"
+            assistant_prompt_value = f"### generated {file_type} file({class_name}.{file_type_extension}): "
             # プロンプトを送信しソースコード生成
             response = GPTInterface.request_code(generate_code_prompt.value, assistant_prompt_value)
             source_code_path = file_type_path if file_type_path is not None else CATddInfo.path(f"output/{class_name}.{file_type_extension}")

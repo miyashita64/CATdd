@@ -11,11 +11,13 @@ class GPTInterface:
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     @classmethod
-    def request(cls, user_prompt):
+    def request(cls, user_prompt, assistant_prompt=""):
         """受け取ったpromptをOpenAI APIに送信し、レスポンスを返す."""
         system_prompt = "Please return path."
         messages = [{'role': 'system', 'content': system_prompt},
                     {'role': 'user', 'content': user_prompt}]
+        if assistant_prompt != "":
+            messages += [{'role': 'assistant', 'content': assistant_prompt}]
         return GPTInterface.request_gpt_3_5_turbo(messages)
     
     @classmethod
@@ -41,7 +43,7 @@ class GPTInterface:
 
     @classmethod
     def request_gpt_3_5_turbo(cls, messages):
-        model = "gpt-3.5-turbo"
+        model = "gpt-3.5-turbo-1106"
         response = cls.client.chat.completions.create(model=model, messages=messages)
         return response.choices[0].message.content
 
