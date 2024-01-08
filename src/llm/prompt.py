@@ -56,7 +56,7 @@ class GeneratePassableCodePrompt(Prompt):
             passable_elms += [
                 PromptElement(f"\n### {another_type} file (\"{class_name}.{another_type_extension}\"):\n{another_type_code}\n", Priority.ANOTOHER.value)
             ]
-        super().__init__(passable_elms, 4096 * 0.5) # 4096 = GPT-3.5-turboの最大の入出力トークン数
+        super().__init__(passable_elms, 16385 * 0.5) # 16385 = GPT-3.5-turboの最大のトークン数(出力は最大4096) ただ、大量にトークン数を使われても困るので少し制限している
 
 class GenerateTestableCodePrompt(Prompt):
     """テスト(コンパイル)できるソースコードを生成するためのプロンプト"""
@@ -86,7 +86,7 @@ class GenerateTestableCodePrompt(Prompt):
             testable_elms += [
                 PromptElement(f"\n### {another_type} file (\"{class_name}.{another_type_extension}\"):\n{another_type_code}\n", Priority.ANOTOHER.value)
             ]
-        super().__init__(testable_elms, 4096 * 0.5) # 4096 = GPT-3.5-turboの最大の入出力トークン数
+        super().__init__(testable_elms, 16385 * 0.5) # 16385 = GPT-3.5-turboの最大のトークン数(出力は最大4096) ただ、大量にトークン数を使われても困るので少し制限している
 
 class PromptElement:
     def __init__(self, value, priority=0):

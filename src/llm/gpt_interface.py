@@ -27,7 +27,10 @@ class GPTInterface:
                     {'role': 'user', 'content': user_prompt},
                     {'role': 'assistant', 'content': f"{assistant_prompt}\n"}]
         Log.debug(user_prompt)
-        return GPTInterface.request_gpt_3_5_turbo(messages)
+        responce = GPTInterface.request_gpt_3_5_turbo(messages)
+        Log.debug("\n====================================\n")
+        Log.debug(responce)
+        return responce
 
     @classmethod
     def request_text_davinci_003(cls, prompt):

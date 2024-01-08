@@ -20,12 +20,11 @@ class BaseTester:
         tester = Tester()
         needless_line_logs_by_file = ""
         for target_range in target_ranges:
+            needless_line_logs = ""
             try:
-                needless_line_logs = ""
                 # 各行についてテストのパスに必要か検証する
                 for line_num in tqdm(target_range):
                     source_code = original_source_code.copy()
-                    needless_line_logs = ""
                     lines = source_code.lines
                     delete_line = lines[line_num]
                     none_space_chars = delete_line.strip()
