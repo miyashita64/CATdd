@@ -130,7 +130,6 @@ CMakeFiles/tdd_sample_test.dir/test/TriangleTest.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/11/bits/charconv.h \
  /usr/include/c++/11/bits/basic_string.tcc \
- /home/taki/CATdd/target_project/exp2/module/Triangle.h \
  /home/taki/CATdd/target_project/exp2/build/googletest-src/googletest/include/gtest/gtest.h \
  /usr/include/c++/11/cstddef /usr/include/c++/11/limits \
  /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_uninitialized.h \
