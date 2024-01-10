@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/module -I/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/test/dummy -I/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/module/API -I/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/module/Motion
+CXX_INCLUDES = -I/home/taki/CATdd/target_project/exp1/module -I/home/taki/CATdd/target_project/exp1/test/dummy -I/home/taki/CATdd/target_project/exp1/module/API -I/home/taki/CATdd/target_project/exp1/module/Motion
 
 CXX_FLAGS = -g -fprofile-arcs -ftest-coverage -std=c++17
 

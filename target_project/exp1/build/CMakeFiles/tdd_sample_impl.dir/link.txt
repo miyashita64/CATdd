@@ -1,2 +1,2 @@
-/usr/bin/ar qc libtdd_sample_impl.a CMakeFiles/tdd_sample_impl.dir/module/Atm.cpp.o CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o
+/usr/bin/ar qc libtdd_sample_impl.a CMakeFiles/tdd_sample_impl.dir/module/Rgb.cpp.o CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o
 /usr/bin/ranlib libtdd_sample_impl.a

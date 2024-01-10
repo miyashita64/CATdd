@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example
+CMAKE_SOURCE_DIR = /home/taki/CATdd/target_project/exp1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/build
+CMAKE_BINARY_DIR = /home/taki/CATdd/target_project/exp1/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,9 +142,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/build/CMakeFiles /mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taki/CATdd/target_project/exp1/build/CMakeFiles /home/taki/CATdd/target_project/exp1/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/taki/CATdd/target_project/exp1/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -249,32 +249,32 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
-module/Atm.o: module/Atm.cpp.o
-.PHONY : module/Atm.o
+module/Rgb.o: module/Rgb.cpp.o
+.PHONY : module/Rgb.o
 
 # target to build an object file
-module/Atm.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Atm.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Atm.cpp.o
-.PHONY : module/Atm.cpp.o
+module/Rgb.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Rgb.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Rgb.cpp.o
+.PHONY : module/Rgb.cpp.o
 
-module/Atm.i: module/Atm.cpp.i
-.PHONY : module/Atm.i
+module/Rgb.i: module/Rgb.cpp.i
+.PHONY : module/Rgb.i
 
 # target to preprocess a source file
-module/Atm.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Atm.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Atm.cpp.i
-.PHONY : module/Atm.cpp.i
+module/Rgb.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Rgb.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Rgb.cpp.i
+.PHONY : module/Rgb.cpp.i
 
-module/Atm.s: module/Atm.cpp.s
-.PHONY : module/Atm.s
+module/Rgb.s: module/Rgb.cpp.s
+.PHONY : module/Rgb.s
 
 # target to generate assembly for a file
-module/Atm.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Atm.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Atm.cpp.s
-.PHONY : module/Atm.cpp.s
+module/Rgb.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Rgb.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Rgb.cpp.s
+.PHONY : module/Rgb.cpp.s
 
 module/blank.o: module/blank.cpp.o
 .PHONY : module/blank.o
@@ -303,29 +303,29 @@ module/blank.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/blank.cpp.s
 .PHONY : module/blank.cpp.s
 
-test/AtmTest.o: test/AtmTest.cpp.o
-.PHONY : test/AtmTest.o
+test/RgbTest.o: test/RgbTest.cpp.o
+.PHONY : test/RgbTest.o
 
 # target to build an object file
-test/AtmTest.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/test/AtmTest.cpp.o
-.PHONY : test/AtmTest.cpp.o
+test/RgbTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/test/RgbTest.cpp.o
+.PHONY : test/RgbTest.cpp.o
 
-test/AtmTest.i: test/AtmTest.cpp.i
-.PHONY : test/AtmTest.i
+test/RgbTest.i: test/RgbTest.cpp.i
+.PHONY : test/RgbTest.i
 
 # target to preprocess a source file
-test/AtmTest.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/test/AtmTest.cpp.i
-.PHONY : test/AtmTest.cpp.i
+test/RgbTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/test/RgbTest.cpp.i
+.PHONY : test/RgbTest.cpp.i
 
-test/AtmTest.s: test/AtmTest.cpp.s
-.PHONY : test/AtmTest.s
+test/RgbTest.s: test/RgbTest.cpp.s
+.PHONY : test/RgbTest.s
 
 # target to generate assembly for a file
-test/AtmTest.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/test/AtmTest.cpp.s
-.PHONY : test/AtmTest.cpp.s
+test/RgbTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/test/RgbTest.cpp.s
+.PHONY : test/RgbTest.cpp.s
 
 # Help Target
 help:
@@ -346,15 +346,15 @@ help:
 	@echo "... gtest_main"
 	@echo "... tdd_sample_impl"
 	@echo "... tdd_sample_test"
-	@echo "... module/Atm.o"
-	@echo "... module/Atm.i"
-	@echo "... module/Atm.s"
+	@echo "... module/Rgb.o"
+	@echo "... module/Rgb.i"
+	@echo "... module/Rgb.s"
 	@echo "... module/blank.o"
 	@echo "... module/blank.i"
 	@echo "... module/blank.s"
-	@echo "... test/AtmTest.o"
-	@echo "... test/AtmTest.i"
-	@echo "... test/AtmTest.s"
+	@echo "... test/RgbTest.o"
+	@echo "... test/RgbTest.i"
+	@echo "... test/RgbTest.s"
 .PHONY : help
 
 

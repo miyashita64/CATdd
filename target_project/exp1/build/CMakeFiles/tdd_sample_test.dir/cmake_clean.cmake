@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/tdd_sample_test.dir/module/Atm.cpp.o"
-  "CMakeFiles/tdd_sample_test.dir/module/Atm.cpp.o.d"
+  "CMakeFiles/tdd_sample_test.dir/module/Rgb.cpp.o"
+  "CMakeFiles/tdd_sample_test.dir/module/Rgb.cpp.o.d"
   "CMakeFiles/tdd_sample_test.dir/module/blank.cpp.o"
   "CMakeFiles/tdd_sample_test.dir/module/blank.cpp.o.d"
-  "CMakeFiles/tdd_sample_test.dir/test/AtmTest.cpp.o"
-  "CMakeFiles/tdd_sample_test.dir/test/AtmTest.cpp.o.d"
+  "CMakeFiles/tdd_sample_test.dir/test/RgbTest.cpp.o"
+  "CMakeFiles/tdd_sample_test.dir/test/RgbTest.cpp.o.d"
   "tdd_sample_test"
   "tdd_sample_test.pdb"
 )

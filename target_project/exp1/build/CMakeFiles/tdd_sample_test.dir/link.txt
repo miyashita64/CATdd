@@ -1,1 +1,1 @@
-/usr/bin/c++ -g -fprofile-arcs -ftest-coverage -std=c++17 CMakeFiles/tdd_sample_test.dir/test/AtmTest.cpp.o CMakeFiles/tdd_sample_test.dir/module/Atm.cpp.o CMakeFiles/tdd_sample_test.dir/module/blank.cpp.o -o tdd_sample_test  lib/libgtest_main.a lib/libgtest.a 
+/usr/bin/c++ -g -fprofile-arcs -ftest-coverage -std=c++17 CMakeFiles/tdd_sample_test.dir/test/RgbTest.cpp.o CMakeFiles/tdd_sample_test.dir/module/Rgb.cpp.o CMakeFiles/tdd_sample_test.dir/module/blank.cpp.o -o tdd_sample_test  lib/libgtest_main.a lib/libgtest.a 
