@@ -3,10 +3,10 @@
 
 class Rgb{
     public:
-        Rgb(int r,int g,int b);
-        int r=13;
-        int g=45;
-        int b=164;
+        Rgb(int _r, int _g, int _b);
+        int r;
+        int g;
+        int b;
 };
 
 #endif
