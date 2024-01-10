@@ -19,10 +19,11 @@ class BaseTester:
     def test_by_ranges(self, original_source_code, target_ranges):
         tester = Tester()
         needless_line_logs_by_file = ""
-        for target_range in target_ranges:
+        for target_range in tqdm(target_ranges):
+            needless_line_logs_by_range = ""
             try:
                 # 各行についてテストのパスに必要か検証する
-                for line_num in tqdm(target_range):
+                for line_num in target_range:
                     needless_line_logs = ""
                     source_code = original_source_code.copy()
                     lines = source_code.lines
@@ -46,14 +47,16 @@ class BaseTester:
                             needless_line_logs += f"{strong_delete_part_line}\n"
                     # 指定した行について、不要と思われる記述があった場合
                     if needless_line_logs != "":
-                        needless_line_logs_by_file += f"{source_code.path}:{line_num+1}\n{needless_line_logs}\n"
+                        needless_line_logs_by_range += f"{source_code.path}:{line_num+1}\n{needless_line_logs}\n"
             except Exception as e:
                 Log.danger(e)
             finally:
-                if needless_line_logs_by_file != "":
-                    Log.log(f"The following lines are not required to pass the test.\n{needless_line_logs_by_file}")
+                if needless_line_logs_by_range != "":
+                    needless_line_logs_by_file += needless_line_logs_by_range
                 # 元のファイルに戻す
                 original_source_code.save()
+        if needless_line_logs_by_file:
+            Log.log(f"The following lines are not required to pass the test.\n{needless_line_logs_by_file}")
 
     def gen_line_by_sub_element(self, original_delete_line):
         delete_line = original_delete_line

@@ -14,6 +14,26 @@ class TestResult:
         self.is_exec_test = len(self.testcase_results) > 0
         self.is_passed = self.is_exec_test and len([result for result in self.testcase_results if not result.is_passed]) == 0
 
+    def print(self):
+        """テスト結果を簡単に表示する"""
+        if self.is_passed:
+            # テスト全通過
+            Log.success("\nPasses all tests!!\n")
+        else:
+            # テストをパスできなかった場合
+            if self.is_exec_test:
+                # テストは実行できた場合
+                # 失敗したテストケースを抽出
+                failed_testcase_results = [testcase_result for testcase_result in self.testcase_results if not testcase_result.is_passed]
+                Log.warning(f"Failed {len(failed_testcase_results)} test.")
+                # 失敗してたテストケースごとのテスト結果を表示
+                for failed_testcase_result in failed_testcase_results:
+                    Log.log(failed_testcase_result.stdout)
+            else:
+                # テストを実行できなかった場合
+                Log.warning("Could not run test.")
+                Log.log(self.stderr)
+
     def generate_testcase_results(self):
         """標準出力からテストケース毎の結果を判定する"""
         testcase_results = []
