@@ -5,9 +5,10 @@
 
 class Triangle
 {
-public:
-    static std::string determine_type(int side1, int side2, int side3);
-    static bool is_right_triangle(int side1, int side2, int side3);
+    public:
+        static std::string determine_type(int side1, int side2, int side3);
+        static bool is_triangle(int side1, int side2, int side3);
+        static bool is_right_triangle(int side1, int side2, int side3);
 };
 
 #endif
