@@ -68,8 +68,12 @@ class TestResult:
                 testcase_stdout = self.stdout[start_match.span()[0]:end_span[1]]
                 testcase_results += [TestcaseResult(testcase_name, is_testcase_passed, testcase_stdout)]
             else:
-                # テストケースの終了を検出できなかった場合(基本的に起きないと想定している)
-                Log.danger(f"Could not confirm completion of the '{testcase_name}'")
+                # テストケースの終了を検出できなかった場合(セグフォなどでテストが異常終了)
+                Log.warning(f"Could not confirm completion of the '{testcase_name}'.\nTesting may have been interrupted due to segmentation fault or other reasons.")
+                start = start_match.span()[0]
+                # とりあえず、テスト開始から350文字を出力とする
+                testcase_stdout = self.stdout[start:start+350]
+                testcase_results += [TestcaseResult(testcase_name, is_testcase_passed, testcase_stdout)]
         return testcase_results
 
 class TestcaseResult:
