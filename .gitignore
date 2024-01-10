@@ -1,0 +1,12 @@
+logs/*
+!logs/.gitkeep
+output/*
+!output/.gitkeep
+target_project/exp1/build
+target_project/exp1/build/*
+target_project/exp2/build
+target_project/exp2/build/*
+target_project/exp3/build
+target_project/exp3/build/*
+target_project/application_example/build
+target_project/application_example/build/*

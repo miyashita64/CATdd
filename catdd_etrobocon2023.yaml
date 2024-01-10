@@ -1,0 +1,8 @@
+version: 1.0
+target_project:
+  path: target_project/etrobocon2023
+  source_path: target_project/etrobocon2023/module
+  test_exec_path: target_project/etrobocon2023
+  test_exec_cmd: make gtest
+  program_lang: C++
+  comment_lang: japanese
