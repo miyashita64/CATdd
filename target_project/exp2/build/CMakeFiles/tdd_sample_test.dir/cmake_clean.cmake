@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/tdd_sample_test.dir/module/Triangle.cpp.o"
+  "CMakeFiles/tdd_sample_test.dir/module/Triangle.cpp.o.d"
   "CMakeFiles/tdd_sample_test.dir/module/blank.cpp.o"
   "CMakeFiles/tdd_sample_test.dir/module/blank.cpp.o.d"
   "CMakeFiles/tdd_sample_test.dir/test/TriangleTest.cpp.o"

@@ -249,6 +249,33 @@ gtest_main/fast:
 	$(MAKE) $(MAKESILENT) -f googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+module/Triangle.o: module/Triangle.cpp.o
+.PHONY : module/Triangle.o
+
+# target to build an object file
+module/Triangle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Triangle.cpp.o
+.PHONY : module/Triangle.cpp.o
+
+module/Triangle.i: module/Triangle.cpp.i
+.PHONY : module/Triangle.i
+
+# target to preprocess a source file
+module/Triangle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Triangle.cpp.i
+.PHONY : module/Triangle.cpp.i
+
+module/Triangle.s: module/Triangle.cpp.s
+.PHONY : module/Triangle.s
+
+# target to generate assembly for a file
+module/Triangle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_impl.dir/build.make CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tdd_sample_test.dir/build.make CMakeFiles/tdd_sample_test.dir/module/Triangle.cpp.s
+.PHONY : module/Triangle.cpp.s
+
 module/blank.o: module/blank.cpp.o
 .PHONY : module/blank.o
 
@@ -319,6 +346,9 @@ help:
 	@echo "... gtest_main"
 	@echo "... tdd_sample_impl"
 	@echo "... tdd_sample_test"
+	@echo "... module/Triangle.o"
+	@echo "... module/Triangle.i"
+	@echo "... module/Triangle.s"
 	@echo "... module/blank.o"
 	@echo "... module/blank.i"
 	@echo "... module/blank.s"

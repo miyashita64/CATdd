@@ -69,10 +69,24 @@ include CMakeFiles/tdd_sample_impl.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/tdd_sample_impl.dir/flags.make
 
+CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o: CMakeFiles/tdd_sample_impl.dir/flags.make
+CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o: ../module/Triangle.cpp
+CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o: CMakeFiles/tdd_sample_impl.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/taki/CATdd/target_project/exp2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o -MF CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o.d -o CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o -c /home/taki/CATdd/target_project/exp2/module/Triangle.cpp
+
+CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/taki/CATdd/target_project/exp2/module/Triangle.cpp > CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.i
+
+CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/taki/CATdd/target_project/exp2/module/Triangle.cpp -o CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.s
+
 CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o: CMakeFiles/tdd_sample_impl.dir/flags.make
 CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o: ../module/blank.cpp
 CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o: CMakeFiles/tdd_sample_impl.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/taki/CATdd/target_project/exp2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/taki/CATdd/target_project/exp2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o -MF CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o.d -o CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o -c /home/taki/CATdd/target_project/exp2/module/blank.cpp
 
 CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.i: cmake_force
@@ -85,15 +99,17 @@ CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.s: cmake_force
 
 # Object files for target tdd_sample_impl
 tdd_sample_impl_OBJECTS = \
+"CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o" \
 "CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o"
 
 # External object files for target tdd_sample_impl
 tdd_sample_impl_EXTERNAL_OBJECTS =
 
+libtdd_sample_impl.a: CMakeFiles/tdd_sample_impl.dir/module/Triangle.cpp.o
 libtdd_sample_impl.a: CMakeFiles/tdd_sample_impl.dir/module/blank.cpp.o
 libtdd_sample_impl.a: CMakeFiles/tdd_sample_impl.dir/build.make
 libtdd_sample_impl.a: CMakeFiles/tdd_sample_impl.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/taki/CATdd/target_project/exp2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libtdd_sample_impl.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/taki/CATdd/target_project/exp2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libtdd_sample_impl.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/tdd_sample_impl.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tdd_sample_impl.dir/link.txt --verbose=$(VERBOSE)
 
