@@ -2,6 +2,8 @@ logs/*
 !logs/.gitkeep
 output/*
 !output/.gitkeep
+tdd/sample
+tdd/sample/*
 target_project/exp1/build
 target_project/exp1/build/*
 target_project/exp2/build
