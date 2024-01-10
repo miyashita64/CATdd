@@ -26,3 +26,5 @@ RUN git clone https://github.com/miyashita64/CATdd.git .
 RUN poetry install
 
 RUN echo "source .env" >> /root/.bashrc
+
+CMD ["tail", "-f", "/dev/null"]

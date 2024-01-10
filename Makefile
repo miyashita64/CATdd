@@ -31,7 +31,7 @@ catdd:
 docker-setup:
 ifdef OPENAI_API_KEY
 	docker build --build-arg OPENAI_API_KEY=$(OPENAI_API_KEY) -t catdd-image .
-	docker run --name catdd-container catdd-image
+	docker run -d --name catdd-container catdd-image
 else
 	@echo "Please input a argument \"OPENAI_API_KEY\""
 	@echo " $$ make docker-setup OPENAI_API_KEY=YOUR_API_KEY"
