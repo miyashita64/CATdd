@@ -127,7 +127,7 @@ if __name__ == "__main__":
     actions = {
         "test": test,
         "base": base_test,
-        "generate": generate_source_code,
+        "gen": generate_source_code,
     }
     if action in actions:
         # 処理開始

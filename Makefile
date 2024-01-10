@@ -6,7 +6,7 @@ test:
 	@poetry run python -B src test
 
 gen:
-	@poetry run python -B src generate
+	@poetry run python -B src gen
 
 base:
 	@poetry run python -B src base
