@@ -15,6 +15,9 @@ std::string Triangle::determine_type(int side1, int side2, int side3)
     {
         return "二等辺三角形";
     }
+    else {
+        return "三角形";
+    }
 }
 
 bool Triangle::is_right_triangle(int side1, int side2, int side3)
