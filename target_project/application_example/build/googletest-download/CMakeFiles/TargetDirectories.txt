@@ -1,3 +1,0 @@
-/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/build/googletest-download/CMakeFiles/googletest.dir
-/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/build/googletest-download/CMakeFiles/edit_cache.dir
-/mnt/c/Users/miyashita/Documents/wsl_box/CATdd/target_project/application_example/build/googletest-download/CMakeFiles/rebuild_cache.dir
