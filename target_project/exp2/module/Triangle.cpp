@@ -2,6 +2,12 @@
 #include "Triangle.h"
 
 std::string Triangle::determine_type(int a, int b, int c) {
+    if (a <= 0 || b <= 0 || c <= 0) {
+        return "非三角形";
+    }
+    if (a + b <= c || b + c <= a || a + c <= b) {
+        return "非三角形";
+    }
     if (a == b && b == c) {
         return "正三角形";
     }

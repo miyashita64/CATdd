@@ -23,4 +23,8 @@ namespace tdd_sample_test
         EXPECT_STREQ(Triangle::determine_type(2, 3, 4).c_str(), "三角形");
     }
 
+    // 三角形でないことを判別できるか
+    TEST(TriangleTest, determineTypeNonTest){
+        EXPECT_STREQ(Triangle::determine_type(200, 3, 4).c_str(), "非三角形");
+    }
 } // namespace tdd_sample_test
