@@ -13,4 +13,8 @@ namespace tdd_sample_test
         EXPECT_STREQ(Triangle::determine_type(3, 2, 2).c_str(), "二等辺三角形");
     }
 
+    // 直角三角形であることを判別できるか
+    TEST(TriangleTest, determineTypeRightTest){
+        EXPECT_STREQ(Triangle::determine_type(3, 4, 5).c_str(), "直角三角形");
+    }
 } // namespace tdd_sample_test
