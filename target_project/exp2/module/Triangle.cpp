@@ -16,7 +16,9 @@ std::string Triangle::determine_type(int a, int b, int c){
         return "直角三角形";
     }
 
-    if (a + b > c || b + c > a || c + a > b){
+    if (a + b > c && b + c > a && c + a > b){
         return "三角形";
+    }else{
+        return "非三角形";
     }
 }
