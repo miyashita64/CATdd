@@ -15,4 +15,8 @@ std::string Triangle::determine_type(int a, int b, int c){
     if (sqrt(a*a + b*b) == c || sqrt(b*b + c*c) == a || sqrt(a*a + c*c) == b){
         return "直角三角形";
     }
+
+    if (a + b > c || b + c > a || c + a > b){
+        return "三角形";
+    }
 }
