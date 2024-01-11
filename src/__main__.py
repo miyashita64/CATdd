@@ -54,6 +54,8 @@ def test():
 
 def base_test():
     """ソースコードがテストに基づくか検証するアクション"""
+    # 軽量化モード(主にテスト結果の分析の省略)を有効化
+    CATddInfo.is_fast_mode = True
     # テスト実行
     Log.log("Run base test ... ")
     base_tester = BaseTester()

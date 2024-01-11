@@ -13,6 +13,8 @@ class CATddInfo():
     program_lang = None         # ソースコード生成時のプログラム言語
     comment_lang = None         # ソースコード生成時のコメント言語
 
+    is_fast_mode = False        # Trueのとき、処理を簡素化する
+
     @classmethod
     def load(cls):
         """CATddの設定ファイルを読み込む"""

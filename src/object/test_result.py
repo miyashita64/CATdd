@@ -1,6 +1,7 @@
 """テスト結果を保持するクラス"""
 
 import re
+from common.catdd_info import CATddInfo
 from common.log import Log
 from object.test_code import TestCode
 
@@ -89,7 +90,7 @@ class TestcaseResult:
         self.stdout = stdout
         failed_test_file_path_pattern = r"\d+:\s+(?P<test_file_path>\S+?):(?P<assert_row>\d+):\sFailure"
         match = re.search(failed_test_file_path_pattern, self.stdout)
-        if match is not None:
+        if match is not None and not CATddInfo.is_fast_mode:
             # テストケースが失敗していた場合
             self.file_path = match.group("test_file_path")
             self.assert_row = int(match.group("assert_row"))
