@@ -1,11 +1,13 @@
 
 #include "NumberGuess.h"
+#include <iostream>
 
 void NumberGuess::setAnswer(int answer) {
-    // 実装は省略
+    this->answer = answer;
 }
 
 bool NumberGuess::checkGuess() {
-    // 実装は省略
-    return true;
+    int guess;
+    std::cin >> guess; // ユーザーの予想を受け取る
+    return (guess == answer); // ユーザーの予想が答えと一致しているかどうかを返す
 }
