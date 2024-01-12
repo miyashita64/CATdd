@@ -47,6 +47,10 @@ class TestResult:
         testcase_ok_matches = list(re.finditer(testcase_ok_pattern, self.stdout, re.MULTILINE))
         testcase_failed_matches = list(re.finditer(testcase_failed_pattern, self.stdout, re.MULTILINE))
 
+        if CATddInfo.is_fast_mode and len(testcase_run_matches) != len(testcase_ok_matches):
+            # テスト結果の判定を高速化
+            return [TestcaseResult("blankTest.fastFailedTest", False ,"")]
+
         # テストケース毎の出力の範囲を特定し保持
         for start_match in testcase_run_matches:
             end_span = None
