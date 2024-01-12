@@ -2,6 +2,7 @@
 #define TRIANGLE_H
 #include <stdio.h>
 #include <string>
+#include <math.h>
 
 class Triangle{
     public:
