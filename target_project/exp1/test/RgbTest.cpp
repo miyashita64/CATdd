@@ -11,4 +11,12 @@ namespace tdd_sample_test
         EXPECT_EQ(rgb.b, 164);
     }
 
+    // 上限値を超える輝度を処理できるか
+    TEST(RgbTest, rgbConstructorOverTest){
+        Rgb rgb(256, 1024, 4);
+        EXPECT_EQ(rgb.r, 255);
+        EXPECT_EQ(rgb.g, 255);
+        EXPECT_EQ(rgb.b, 4);
+    }
+
 } // namespace tdd_sample_test

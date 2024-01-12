@@ -10,7 +10,6 @@ public:
 	int r;
 	int g;
 	int b;
-	// int rgb(int r, int g, int b);
 };
 
 #endif
