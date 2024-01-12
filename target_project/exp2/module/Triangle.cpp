@@ -15,6 +15,8 @@ std::string Triangle::determine_type(int a, int b, int c){
         result = "二等辺三角形";
     }else if((ap2 == bp2 + cp2) | (bp2 == cp2 + ap2) | (cp2 == bp2 + ap2)){
         result = "直角三角形";
+    }else if(a >= b + c | b >= a + c | c >= a + b){
+        result = "非三角形";
     }else if(a > 0 && b > 0 && c > 0){
         result = "三角形";
     }
