@@ -15,5 +15,13 @@ namespace tdd_sample_test
     TEST(TriangleTest, determineTypeRightTest){
         EXPECT_STREQ(Triangle::determine_type(3, 4, 5).c_str(), "直角三角形");
     }
+    // 三角形であることを判別できるか
+    TEST(TriangleTest, determineTypeTest){
+        EXPECT_STREQ(Triangle::determine_type(2, 3, 4).c_str(), "三角形");
+    }
+    // 三角形でないことを判別できるか
+    TEST(TriangleTest, determineTypeNonTest){
+        EXPECT_STREQ(Triangle::determine_type(200, 3, 4).c_str(), "非三角形");
+    }
 
 } // namespace tdd_sample_test

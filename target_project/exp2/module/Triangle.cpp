@@ -16,9 +16,9 @@ std::string Triangle::determine_type(int side1, int side2, int side3) {
         } else if (std::pow(sides[0], 2) + std::pow(sides[1], 2) == std::pow(sides[2], 2)) {
             return "直角三角形";
         } else {
-            return "その他";
+            return "三角形";
         }
     } else {
-        return "三角形ではありません";
+        return "非三角形";
     }
 }
