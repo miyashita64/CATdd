@@ -54,7 +54,7 @@ https://help.openai.com/en/articles/4936850-where-do-i-find-my-api-key
 
 環境変数に`OPENAI_API_KEY`を設定する
 ```
-export OPENAI_API_KEY=取得したOpenAI APIキー
+echo "export OPENAI_API_KEY=取得したOpenAI APIキー" >> ~/.bashrc
 ```
 
 ## CATddのセットアップ
