@@ -12,7 +12,7 @@
 ```
 sudo apt update
 sudo apt upgrade
-sudo apt install libssl-dev libffi-dev libncurses5-dev zlib1g zlib1g-dev libreadline-dev libbz2-dev libsqlite3-dev make gcc
+sudo apt install libssl-dev libffi-dev libncurses5-dev zlib1g zlib1g-dev libreadline-dev libbz2-dev libsqlite3-dev make gcc cmake build-essential
 curl https://pyenv.run | bash
 ```
 
@@ -42,6 +42,8 @@ Pythonのバージョンが3.10.13と表示されればOK
 3. Poetryのインストール
 ```
 curl -sSL https://install.python-poetry.org | python3 -
+# !!poetryのインストール完了時にパスを通すようにメッセージが表示されるので従うこと!!
+export PATH="この部分はメッセージに従う:$PATH"
 poetry --version
 ```
 Poetryのバージョンが表示されていればOK
