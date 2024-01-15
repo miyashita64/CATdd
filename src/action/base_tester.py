@@ -19,11 +19,11 @@ class BaseTester:
     def test_by_ranges(self, original_source_code, target_ranges):
         tester = Tester()
         needless_line_logs_by_file = ""
-        for target_range in tqdm(target_ranges):
+        for target_range in target_ranges:
             needless_line_logs_by_range = ""
             try:
                 # 各行についてテストのパスに必要か検証する
-                for line_num in target_range:
+                for line_num in tqdm(target_range):
                     needless_line_logs = ""
                     source_code = original_source_code.copy()
                     lines = source_code.lines
