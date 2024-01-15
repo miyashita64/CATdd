@@ -41,7 +41,7 @@ class BaseTester:
                         source_code.code = "\n".join(lines)
                         source_code.save()
                         # テスト実行
-                        test_result = tester.test()
+                        test_result = tester.test(60)
                         # 指定した要素について、不要と思われる記述があった場合
                         if test_result.is_passed:
                             needless_line_logs += f"{strong_delete_part_line}\n"
