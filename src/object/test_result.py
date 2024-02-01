@@ -1,14 +1,12 @@
-"""テスト結果を保持するクラス"""
-
 import re
 from common.catdd_info import CATddInfo
 from common.log import Log
 from object.test_code import TestCode
 
 class TestResult:
-    """テスト結果を保持するクラス"""
+    """テスト結果を保持するクラス."""
     def __init__(self, result_stdout, result_stderr):
-        """コンストラクタ"""
+        """コンストラクタ."""
         self.stdout = result_stdout
         self.stderr = result_stderr
         self.testcase_results = self.generate_testcase_results()
@@ -16,7 +14,7 @@ class TestResult:
         self.is_passed = self.is_exec_test and len([result for result in self.testcase_results if not result.is_passed]) == 0
 
     def print(self):
-        """テスト結果を簡単に表示する"""
+        """テスト結果を簡単に表示する."""
         if self.is_passed:
             # テスト全通過
             Log.success("\nPasses all tests!!\n")
@@ -36,7 +34,7 @@ class TestResult:
                 Log.log(self.stderr)
 
     def generate_testcase_results(self):
-        """標準出力からテストケース毎の結果を判定する"""
+        """標準出力からテストケース毎の結果を判定する."""
         testcase_results = []
         # 標準出力におけるテストケースの実行状況に対する正規表現のパターン定義
         testcase_run_pattern = r"^.+\[\s+RUN\s+] .+\[m(?P<testcase_name>\S+?)$"                     # 開始
@@ -82,10 +80,10 @@ class TestResult:
         return testcase_results
 
 class TestcaseResult:
-    """テストケース毎のテスト結果を保持する"""
+    """テストケース毎のテスト結果を保持する."""
 
     def __init__(self, name, is_testcase_passed, stdout):
-        """コンストラクタ"""
+        """コンストラクタ."""
         self.name = name
         self.class_name = name.split(".")[0]
         if self.class_name.endswith('Test'):                                        

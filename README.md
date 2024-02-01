@@ -63,7 +63,7 @@ echo "export OPENAI_API_KEY=取得したOpenAI APIキー" >> ~/.bashrc
 poetry install
 ```
 
-2. catddコマンドの有効化
+2. catddコマンドの有効化(.bashrcとかに書くと永続化できるよ)
 ```
 source .env
 ```

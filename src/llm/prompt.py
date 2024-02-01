@@ -3,6 +3,7 @@ from enum import Enum
 from common.catdd_info import CATddInfo
 
 class Priority(Enum):
+    """プロンプトに用いる情報の優先度."""
     GEN = 5
     BASE = 3
     ANOTOHER = 2
@@ -25,7 +26,7 @@ class Prompt:
         return sum([elm.token for elm in self.elms])
 
 class GeneratePassableCodePrompt(Prompt):
-    """テストにパスできるソースコードを生成するためのプロンプト"""
+    """テストにパスできるソースコードを生成するためのプロンプト."""
     def __init__(self, class_name, is_header_type, failed_testcase_results, header_code, source_code):
         file_type = "header" if is_header_type else "source"
         file_type_extension = "h" if is_header_type else "cpp"
@@ -59,7 +60,7 @@ class GeneratePassableCodePrompt(Prompt):
         super().__init__(passable_elms, 16385 * 0.5) # 16385 = GPT-3.5-turboの最大のトークン数(出力は最大4096) ただ、大量にトークン数を使われても困るので少し制限している
 
 class GenerateTestableCodePrompt(Prompt):
-    """テスト(コンパイル)できるソースコードを生成するためのプロンプト"""
+    """テスト(コンパイル)できるソースコードを生成するためのプロンプト."""
     def __init__(self, class_name, is_header_type, error, test_code, header_code, source_code):
         file_type = "header" if is_header_type else "source"
         file_type_extension = "h" if is_header_type else "cpp"
@@ -96,6 +97,10 @@ class PromptElement:
 
     @property
     def value(self):
+        """
+        NOTE: 調子に乗って、property使えば呼び出し元で分岐減ってよくない？と思ったけど、
+              純粋に呼び出し元でpriorityの閾値を挙げていく方が、可読性的にも処理効率的にもよかった...
+        """
         return self._value if self.priority > 0 else ""
 
     @property
@@ -104,6 +109,7 @@ class PromptElement:
 
     def calc_token(self):
         # トークン数を算出する
+        # TODO: モデルが決め打ち状態
         encoding_35 = tiktoken.encoding_for_model("gpt-3.5-turbo-0301")
         encoding = tiktoken.get_encoding(encoding_35.name)
         num_tokens = len(encoding.encode(self.value))

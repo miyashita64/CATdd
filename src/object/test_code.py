@@ -24,7 +24,7 @@ class TestCode:
         return self._code.split("\n")
 
     def slice_testcase(self, row):
-        """指定された行を含むテストケースのコードを抽出する"""
+        """指定された行を含むテストケースのコードを抽出する."""
         before_code, nest = self.slice_up("\n".join(self.lines[:row]))
         after_code, nest = self.slice_down("\n".join(self.lines[row:]), nest)
         if nest < 0:
@@ -32,7 +32,7 @@ class TestCode:
         return before_code + "\n" + after_code
     
     def slice_up(self, code, nest=0):
-        """指定した行の上方向にTESTを探索し、}の数をカウントする"""
+        """指定した行の上方向にTESTを探索し、}の数をカウントする."""
         lines = code.split("\n")
         for i, line in enumerate(lines[::-1]):
             start_char_count = line.find("{")
@@ -44,7 +44,7 @@ class TestCode:
         return code, 1000
 
     def slice_down(self, code, nest=0):
-        """指定した行の下方向に{}を探索する"""
+        """指定した行の下方向に{}を探索する."""
         lines = code.split("\n")
         for i, line in enumerate(lines):
             start_char_count = line.find("{")

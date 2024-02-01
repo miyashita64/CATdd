@@ -6,7 +6,9 @@ from action.tester import Tester
 from object.source_code import SourceCode
 
 class BaseTester:
+    """テストケースに基づくことを検証するクラス."""
     def all_test(self):
+        """ソースディレクトリ下のすべてのソースファイル(.cpp)に対し検証を行う."""
         # テスト対象のファイルを取得
         target_file_pattern = r".*\.cpp$"
         target_file_paths = FileInterface.search_all(target_file_pattern, CATddInfo.src_path)
@@ -14,9 +16,16 @@ class BaseTester:
         for file_path in target_file_paths:
             Log.log(f"Check \"{file_path}\" based on the test.")
             original_source_code = SourceCode(file_path)
+            # 検証する範囲は「range(ソースコードの行数)」を指定してファイル全体を検証する
             self.test_by_ranges(original_source_code.copy(), [range(len(original_source_code.lines))])
 
     def test_by_ranges(self, original_source_code, target_ranges):
+        """指定したコードの指定した範囲について検証する.
+        
+        Args:
+            original_source_code (SourceCode): 対象とするソースコード
+            target_ranges ([range]): 対象とする行の範囲(range)のリスト
+        """
         tester = Tester()
         needless_line_logs_by_file = ""
         for target_range in target_ranges:
@@ -59,6 +68,13 @@ class BaseTester:
             Log.log(f"The following lines are not required to pass the test.\n{needless_line_logs_by_file}")
 
     def gen_line_by_sub_element(self, original_delete_line):
+        """1行のソースコードについて各部分を削除した行を生成する.
+
+        Args:
+            original_delete_line (string): 対象のソースコードの行
+        Returns:
+            [(ある部分を削除した行, ある部分を強調した行)]
+        """
         delete_line = original_delete_line
         # 複合条件や引数を考慮する
         for keyword in ["&&", "||", "(", ";"]:

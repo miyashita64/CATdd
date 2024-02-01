@@ -2,7 +2,7 @@ import os
 import yaml
 
 class CATddInfo():
-    """CATdd全体で共有する情報を保持するクラス"""
+    """CATdd全体で共有する情報を保持するクラス."""
     # CATddのパス(CATdd/)
     catdd_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     version = None              # バージョン
@@ -17,7 +17,7 @@ class CATddInfo():
 
     @classmethod
     def load(cls):
-        """CATddの設定ファイルを読み込む"""
+        """CATddの設定ファイルを読み込む."""
         from common.log import Log  # 循環インポートを回避するための苦肉の策
         config_file_path = cls.path("catdd.yaml")
         Log.log(f"Loading '{config_file_path}' ... ", end="")
@@ -34,10 +34,10 @@ class CATddInfo():
 
     @classmethod
     def path(cls, additional_path):
-        """CATddのパスからの相対パスを受け取り絶対パスを返す"""
+        """CATddのパスからの相対パスを受け取り絶対パスを返す."""
         return os.path.normpath(os.path.join(cls.catdd_path, additional_path))
 
     @classmethod
     def output_path(cls, additional_path):
-        """支援対象上のソースコードを設置するパスからの相対パスを受け取り絶対パスを返す"""
+        """支援対象上のソースコードを設置するパスからの相対パスを受け取り絶対パスを返す."""
         return os.path.normpath(os.path.join(cls.src_path, additional_path))

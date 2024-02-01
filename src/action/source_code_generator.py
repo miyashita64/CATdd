@@ -8,15 +8,14 @@ from llm.prompt import GeneratePassableCodePrompt, GenerateTestableCodePrompt
 from object.source_code import SourceCode
 from object.test_code import TestCode
 
-class Priority(Enum):
-    GEN = 5
-    BASE = 3
-    ANOTOHER = 2
-    FIRST_RESULT = 4
-    RESULT = 1
-
 class SourceCodeGenerator:
+    """ソースコードを生成するクラス."""
     def generate(self, test_result):
+        """ソースコードを生成する.
+        
+        Args:
+            test_result (TestResult): テスト結果
+        """
         source_codes = []
         if test_result.is_passed:
             # すべてのテストにパスしていた場合
@@ -32,7 +31,7 @@ class SourceCodeGenerator:
         return source_codes
 
     def generate_passable_code(self, test_result):
-        """テストにパスできるソースコードを生成する"""
+        """テストにパスできるソースコードを生成する."""
         source_codes = []
         # テスト結果をテスト対象のクラス名ごとにグルーピング
         failed_testcase_results = [testcase_result for testcase_result in test_result.testcase_results if not testcase_result.is_passed]
@@ -68,7 +67,7 @@ class SourceCodeGenerator:
         return source_codes
 
     def generate_testable_code(self, test_result):
-        """テスト実行可能なソースコードを生成する"""
+        """テスト実行可能なソースコードを生成する."""
         source_codes = []
 
         # テスト結果(コンパイルエラー)が膨大過ぎる場合を考慮

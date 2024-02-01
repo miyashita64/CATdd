@@ -3,7 +3,7 @@ from enum import Enum
 from common.catdd_info import CATddInfo
 
 class Color(Enum):
-    """各色に対応するエスケープシーケンスの値を管理する辞書"""
+    """各色に対応するエスケープシーケンスの値を管理する辞書."""
     BLACK = 0
     RED = 1
     GREEN = 2
@@ -16,7 +16,7 @@ class Color(Enum):
     GRAY = 90
 
 class Log:
-    """ターミナルやログファイルへの出力を行うクラス"""
+    """ターミナルやログファイルへの出力を行うクラス."""
     output_path = CATddInfo.path("logs/latest.log")
     log_text = ""
 
@@ -31,14 +31,14 @@ class Log:
     
     @classmethod
     def debug(cls, text):
-        """標準出力はしないがログに記録する"""
+        """標準出力はしないがログに記録する."""
         # text = f"\n{Log.color_es(Color.GRAY)}{text}{Log.color_es(Color.DEFAULT)}\n"
         text = f"\n{text}\n"
         cls.log_text += text
     
     @classmethod
     def save(cls):
-        """ファイル書き出し"""
+        """ファイル書き出し."""
         from common.file_interface import FileInterface # 循環インポートを回避するための苦肉の策
         FileInterface.write(cls.output_path, cls.log_text)
         cls.log_text = ""
@@ -47,25 +47,25 @@ class Log:
     """ログのバリエーション"""
     @classmethod
     def info(cls, text, end="\n"):
-        """重要情報"""
+        """重要情報."""
         info_text = cls.syan_text(text)
         cls.log(info_text, end)
 
     @classmethod
     def success(cls, text, end="\n"):
-        """成功や完了"""
+        """成功や完了."""
         success_text = cls.green_text(text)
         cls.log(success_text, end)
 
     @classmethod
     def warning(cls, text, end="\n"):
-        """警告"""
+        """警告."""
         warning_text = cls.yellow_text(text)
         cls.log(warning_text, end)
 
     @classmethod
     def danger(cls, text, end="\n"):
-        """致命的な事態"""
+        """致命的な事態."""
         danger_text = cls.red_text(f"\n!!! {text} !!!\n")
         cls.log(danger_text, end)
 
@@ -91,14 +91,14 @@ class Log:
     """エスケープシーケンス"""
     @staticmethod
     def color_es(color: Color):
-        """文字色を指定するエスケープシーケンスを返す"""
+        """文字色を指定するエスケープシーケンスを返す."""
         if color is Color.GRAY:
             return "\033[90m"
         return f"\033[3{color.value}m"
 
     @staticmethod
     def bg_color_es(color: Color):
-        """文字の背景色を指定するエスケープシーケンスを返す"""
+        """文字の背景色を指定するエスケープシーケンスを返す."""
         if color is Color.GRAY:
             return "\033[47m"   # 白だけど
         return f"\033[4{color.value}m"

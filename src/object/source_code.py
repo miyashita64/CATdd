@@ -24,16 +24,16 @@ class SourceCode:
         return self._code.split("\n")
 
     def save(self):
-        """ファイル書き出し"""
+        """ファイル書き出し."""
         FileInterface.write(self.path, self._code)
 
     def copy(self):
-        """自身と同じメンバ変数を持つSourceCodeを返す"""
+        """自身と同じメンバ変数を持つSourceCodeを返す."""
         copy_source_code = SourceCode(self.path, self._code)
         return copy_source_code
 
     def sub_needless_line_code(self, code):
-        """不要な行を削除する"""
+        """不要な行を削除する."""
         # 不要な行を定義
         needless_pattern_texts = [r"^```cpp$", r"^```CPP$", r"^```Cpp$", r"^```c\+\+$", r"^```C\+\+$", r"^```$", r"\s*###.+"]
         # コードの開始と終了記号を定義

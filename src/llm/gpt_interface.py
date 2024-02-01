@@ -6,7 +6,7 @@ from common.log import Log
 from common.file_interface import FileInterface
 
 class GPTInterface:
-    """GPTとの通信を行うクラス"""
+    """GPTとの通信を行うクラス."""
 
     client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
@@ -34,6 +34,7 @@ class GPTInterface:
 
     @classmethod
     def request_text_davinci_003(cls, prompt):
+        """text-davinci-003モデル."""
         model = "text-davinci-003"
         response = cls.client.completions.create(model=model,
                                              prompt=prompt,
@@ -45,12 +46,14 @@ class GPTInterface:
 
     @classmethod
     def request_gpt_3_5_turbo(cls, messages):
+        """gpt-3.5-turboモデル."""
         model = "gpt-3.5-turbo-1106"
         response = cls.client.chat.completions.create(model=model, messages=messages)
         return response.choices[0].message.content
 
     @classmethod
     def request_gpt_4(cls, messages):
+        """gpt-4モデル."""
         model = "gpt-4"  # GPT-4のモデルを指定
         response = cls.client.chat.completions.create(model=model,
                                                   messages=messages,
